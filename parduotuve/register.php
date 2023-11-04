@@ -27,7 +27,7 @@ $_SESSION['prev']="register";
 				    </table>   
 								<div align="center">
                     			<table> <tr><td>
-                                    <form action="procregister.php" method="POST" class="login">              
+                                    <form action="proclogin.php" method="POST" class="login">              
                                                 <center style="font-size:18pt;"><b>Registracija</b></center>
 										
 									<p style="text-align:left;">Vardas:<br>

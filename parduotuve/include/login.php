@@ -24,12 +24,10 @@ include("include/nustatymai.php");
         </p>  
         <p style="text-align:left;">
             <input type="submit" name="login" value="Prisijungti"/>   
-            <input type="submit" name="problem" value="Pamiršote slaptažodį?"/>   
         </p>
         <p>
  <?php
-			if ($uregister != "admin") { echo "<a href=\"register.php\">Registracija</a>";}
-			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"guest.php\">Svečias</a>";
+			 echo "<a href=\"register.php\">Registracija</a>";
 ?>
         </p>     
     </form>

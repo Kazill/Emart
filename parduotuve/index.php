@@ -26,15 +26,9 @@ include("include/functions.php");
 		
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
-        
-        include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
-?>
-                <div style="text-align: center;color:green">
-                    <br><br>
-                    <h1>Elektronikos el. parduotuvė</h1>
-                </div><br>
-      <?php
-          }                
+        header("Location:prekiuposisteme.php?");exit;
+        //include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
+      }              
           else {   			 
               
               if (!isset($_SESSION['prev'])) inisession("full");             // nustatom sesijos kintamuju pradines reiksmes 

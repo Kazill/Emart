@@ -15,10 +15,10 @@ $role="";
         echo "Prisijungęs vartotojas: <b>".$email."</b>     Rolė: <b>".$role."</b> <br>";
         echo "</td></tr><tr><td>";
 
-        echo "[<a href=\"valdymoposisteme.php\">Valdymo posistemė</a>] &nbsp;&nbsp;";
-        echo "[<a href=\"prekiuposisteme.php\">Prekių posistemė</a>] &nbsp;&nbsp;";
-        echo "[<a href=\"paslauguposisteme.php\">Paslaugų posistemė</a>] &nbsp;&nbsp;";
-
+        echo "[<a href=\"uzsakymai.php\">Užsakymų sąrašas</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"prekiuposisteme.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"naudotojai.php\">Naudotojų sąrašas</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
         echo "[<a href=\"logout.php\">Atsijungti</a>]";
       echo "</td></tr></table>";
 ?>       

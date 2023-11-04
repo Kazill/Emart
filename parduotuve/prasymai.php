@@ -25,7 +25,7 @@ include("include/functions.php");
 	</script>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/prekiuposistemestop.png"></center>
+            <center><h1>Pašymai</h1></center>
         </td></tr><tr><td> 
 <?php
            
