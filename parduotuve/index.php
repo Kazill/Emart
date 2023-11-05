@@ -1,17 +1,11 @@
 <?php
-// index.php
-// jei vartotojas prisijungęs rodomas demonstracinis meniu pagal jo rolę
-// jei neprisijungęs - prisijungimo forma per include("login.php");
-// toje formoje daugiau galimybių...
-
 session_start();
 include("include/functions.php");
 ?>
-
 <html>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
-        <title>Elektronikos el. parduotuve</title>
+        <title>Elektronikos el. parduotuvė</title>
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
@@ -19,12 +13,10 @@ include("include/functions.php");
             <center><img src="include/top.png"></center>
         </td></tr><tr><td> 
 <?php
-           
     if (!empty($_SESSION['email']))     //Jei vartotojas prisijungęs, valom logino kintamuosius ir rodom meniu
     {                                  // Sesijoje nustatyti kintamieji su reiksmemis is DB
                                        // $_SESSION['user'],$_SESSION['ulevel'],$_SESSION['userid'],$_SESSION['umail']
-		
-		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
+		//inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
         header("Location:prekiuposisteme.php?");exit;
         //include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
@@ -38,10 +30,10 @@ include("include/functions.php");
 				echo "<div align=\"center\">";echo "<font size=\"4\" color=\"#ff0000\">".$_SESSION['message'] . "<br></font>";          
 		
                 echo "<table class=\"center\"><tr><td>";
-          include("include/login.php");                    // prisijungimo forma
+                include("include/login.php");                    // prisijungimo forma
                 echo "</td></tr></table></div><br>";
            
 		  }
 ?>
-            </body>
+    </body>
 </html>

@@ -25,7 +25,7 @@ include("include/functions.php");
 	</script>
     <body>
         <table class="center" ><tr><td>
-            <center><h1>Pašymai</h1></center>
+            <center><h1>Prašymai</h1></center>
         </td></tr><tr><td> 
 <?php
            
@@ -38,54 +38,6 @@ include("include/functions.php");
 		
         //include("include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
-			
-			<!-- <?php
-
-			#Prisijungimas
-
-			$server=DB_SERVER;
-			$user=DB_USER;
-			$password=DB_PASS;
-			$dbname=DB_NAME;
-			$lentele="Preke";
-
-			$conn = new mysqli($server, $user, $password, $dbname);
-			   if ($conn->connect_error) die("Negaliu prisijungti: " . $conn->connect_error);
-			mysqli_set_charset($conn,"utf8");// dėl lietuviškų raidžių
-
-			#Nuskaitymas
-			$sql =  "SELECT * FROM $lentele";
-			if (!$result = $conn->query($sql)) die("Negaliu nuskaityti: " . $conn->error);
-
-
-			#Išvedimas
-				// parodyti
-			echo "<table border=\"1\">";
-		
-			echo "<tr>
-				<th>Gamintojas</th>
-				<th>Kodas</th>
-				<th>Kaina</th>
-				<th>Kategorija</th>
-				<th>Kiekis</th>
-				<th>Garantija</th>
-				<th>Data nuo</th>
-				<th>Data iki</th>
-				
-			</tr>";
-		
-			while($row = $result->fetch_assoc()) {
-				echo "<tr><td>".$row['gamintojas']."</td><td>".$row['id']."</td><td>".$row['kaina']."</td><td>".$row['kategorija']."</td><td>".$row['kiekis'].
-					"</td><td>".$row['garantija']."</td><td>".$row['pristatymasgeriausiuatveju']."</td><td>".$row['pristatymasblogiausiuatveju']."</td>";
-				echo "<td><a href='perziuretipreke.php?id={$row['id']}' title=''>Peržiūrėti</a></td>";
-				if ($userlevel == $user_roles[ADMIN_LEVEL] ) {
-					echo "<td><a href='#' onclick='showConfirmDialog(\"{$row['id']}\"); return false;' title=''>Šalinti</a></td>";
-					echo "<td><a href='redaguotipreke.php?id={$row['id']}' title=''>Redaguoti</a></td>";
-       			}
-				echo "</tr>";
-			}
-			echo "</table>";
-			?>
       <?php
           }                
           else {   			 
@@ -101,7 +53,16 @@ include("include/functions.php");
                 echo "</td></tr></table></div><br>";
            
 		  }
-?> -->
+?>
+	   <br>
+           <div style="background-color: aqua; padding: 10px;">
+				<p>id: 5</p>
+				<p>Pirkėjas: Tomas</p>
+				<p>Pardavėjas: Matas</p>
+				<button onclick="window.location.href='uzsakymas.php'">
+					Peržiūrėti
+    			</button>
+		   </div>
             </body>
 </html>
 
