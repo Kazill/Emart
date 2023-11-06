@@ -54,6 +54,18 @@ include("include/functions.php");
            
 		  }
 ?>
+	   <br>
+           <div style="background-color: aqua; padding: 10px;">
+				<p>Vardas: Kestas</p>
+                <p>Pavardė: Kestelis</p>
+                <p>El. paštas: kestas@gmail.com</p>
+				<p><button>
+					Patvirtinti
+    			</button>
+                <button>
+					Ištrinti prašymą
+    			</button></p>
+		   </div>
             </body>
 </html>
 
