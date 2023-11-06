@@ -14,9 +14,18 @@ session_start();
 				    </table>   <br>
                                     <div style="background-color: aqua; padding: 10px;">
                                     <center><b>Apeliacija</b></center>
-				                    <p style="text-align:left;">Tekstas: Prekė yra brokuota.</p>
-									<p style="text-align:left;">Priežastis: Brokas<br></p>
-                                    <p style="text-align:left;">Data: 2023-04-11<br></p>
+                                    <div align="center" style="background-color: aqua; padding: 10px;">
+                <form action="/Emart/parduotuve/naudotojas/naudotojai.php" method="post">
+                    <p style="text-align:left;">Priežastis:<br>
+                        <input type="text" name="Priežastis" value="Pardavinėja broką" /></p>
+                        <p style="text-align:left;">Tekstas:<br>
+                        <textarea name="Tekstas" rows="4" cols="50">Nusipirkau rašiklį ir kai jį gavau jis buvo be rašalo.</textarea>
+                        </p>
+
+                        <button type="submit">Siųsti apeliaciją</button>
+                    </p>
+                </form>
+            </div>
                                     </td></tr>
 			                    </table>
                              </div>

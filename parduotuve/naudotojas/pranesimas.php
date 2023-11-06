@@ -14,11 +14,18 @@ session_start();
 				    </table>   <br>
                                     <div style="background-color: aqua; padding: 10px;">
                                     <center><b>Pranešimas</b></center>
-				                    <p style="text-align:left;">Data: 2023-04-11</p>
-				                    <p style="text-align:left;">Gavėjas: Tomas Tomaitis</p>
-									<p style="text-align:left;">Priežastis: Užsakymas užsakytas<br></p>
-                                    <p style="text-align:left;">Tekstas: Jūs įsigijote naują prekę<br></p>
-                                    </td></tr>
+                                    <div align="center" style="background-color: aqua; padding: 10px;">
+                <form action="/Emart/parduotuve/naudotojas/naudotojai.php" method="post">
+                    <p style="text-align:left;">Priežastis:<br>
+                        <input type="text" name="Priežastis" value="" /></p>
+                        <p style="text-align:left;">Tekstas:<br>
+                        <textarea name="Tekstas" rows="4" cols="50"></textarea>
+                        </p>
+
+                        <button type="submit">Siųsti pranešimą</button>
+                    </p>
+                </form>
+            </div>
 			                    </table>
                              </div>
                 </td></tr>

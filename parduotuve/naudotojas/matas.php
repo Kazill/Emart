@@ -34,7 +34,7 @@ function confirmAction(linkUrl, actionName) {
                                     <button onclick="window.location.href='/Emart/parduotuve/naudotojas/redaguotitomas.php'">
 					                    Redaguoti
     			                    </button>
-                                    <button onclick="window.location.href='/Emart/parduotuve/naudotojas/pranesimasm.php'">
+                                    <button onclick="window.location.href='/Emart/parduotuve/naudotojas/pranesimas.php'">
 					                    Pranešimas
     			                    </button>
                                     <button onclick="window.location.href='/Emart/parduotuve/naudotojas/apeliacija.php'">
