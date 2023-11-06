@@ -54,15 +54,6 @@ include("include/functions.php");
            
 		  }
 ?>
-	   <br>
-           <div style="background-color: aqua; padding: 10px;">
-				<p>id: 5</p>
-				<p>Pirkėjas: Tomas</p>
-				<p>Pardavėjas: Matas</p>
-				<button onclick="window.location.href='uzsakymas.php'">
-					Peržiūrėti
-    			</button>
-		   </div>
             </body>
 </html>
 
