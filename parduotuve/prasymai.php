@@ -59,9 +59,12 @@ include("include/functions.php");
 				<p>Vardas: Kestas</p>
                 <p>Pavardė: Kestelis</p>
                 <p>El. paštas: kestas@gmail.com</p>
-				<button>
+				<p><button>
 					Patvirtinti
     			</button>
+                <button>
+					Ištrinti prašymą
+    			</button></p>
 		   </div>
             </body>
 </html>
