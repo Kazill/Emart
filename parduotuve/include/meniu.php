@@ -19,6 +19,7 @@ $role="";
         echo "[<a href=\"prekiuposisteme.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"naudotojai.php\">Naudotojų sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"krepselis.php\">Krepšelis</a>] &nbsp;&nbsp;";
         echo "[<a href=\"logout.php\">Atsijungti</a>]";
       echo "</td></tr></table>";
 ?>       

@@ -56,11 +56,11 @@ include("include/functions.php");
 ?>
 	   <br>
            <div style="background-color: aqua; padding: 10px;">
-				<p>id: 5</p>
-				<p>Pirkėjas: Tomas</p>
-				<p>Pardavėjas: Matas</p>
-				<button onclick="window.location.href='uzsakymas.php'">
-					Peržiūrėti
+				<p>Vardas: Kestas</p>
+                <p>Pavardė: Kestelis</p>
+                <p>El. paštas: kestas@gmail.com</p>
+				<button>
+					Patvirtinti
     			</button>
 		   </div>
             </body>
