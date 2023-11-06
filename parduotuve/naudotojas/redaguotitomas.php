@@ -1,34 +1,34 @@
 <?php
 session_start();
-include("include/nustatymai.php");
-include("include/functions.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
 
 // Fetch user details from session or a database query
 // Assuming $userData is an array holding user information
 $userData = array(
-    'Vardas' => 'Matas',
-    'Pavarde' => 'Mataitis',
-    'Email' => 'matas@gmail.com',
+    'Vardas' => 'Tomas',
+    'Pavarde' => 'Tomaitis',
+    'Email' => 'tomaitis@gmail.com',
     'Password' => '',
-    'ArBlokuotas' => 'Taip' // 'Taip' or 'Ne'
+    'ArBlokuotas' => 'Ne' // 'Taip' or 'Ne'
 );
 ?>
 <html>
 <head>  
     <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8"> 
     <title>Redaguoti Naudotoją</title>
-    <link href="include/styles.css" rel="stylesheet" type="text/css">
+    <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>   
     <table class="center">
-        <tr><td><img src="include/top.png"></td></tr>
+        <tr><td><img src="/Emart/parduotuve/include/top.png"></td></tr>
         <tr><td> 
             <table style="border-width: 2px; border-style: dotted;">
-                <tr><td>Atgal į [<a href="naudotojai.php">Naudotojus</a>]</td></tr>
+                <tr><td>Atgal į [<a href="/Emart/parduotuve/naudotojas/naudotojai.php">Naudotojus</a>]</td></tr>
             </table>
             <br>
             <div align="center" style="background-color: aqua; padding: 10px;">
-                <form action="matas.php" method="post">
+                <form action="/Emart/parduotuve/naudotojas/tomas.php" method="post">
                     <center style="font-size:18pt;"><b>Redaguoti Naudotoją</b></center>
                     <p style="text-align:left;">Vardas:<br>
                         <input type="text" name="Vardas" value="<?php echo htmlspecialchars($userData['Vardas']); ?>" /></p>

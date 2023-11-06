@@ -5,7 +5,7 @@
 // toje formoje daugiau galimybių...
 
 session_start();
-include("include/functions.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
 
 ?>
 
@@ -13,7 +13,7 @@ include("include/functions.php");
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
         <title>Prekių posistemė</title>
-        <link href="include/styles.css" rel="stylesheet" type="text/css" >
+        <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css" >
     </head>
 	<script>
 		function showConfirmDialog(removeId) {
@@ -32,11 +32,11 @@ include("include/functions.php");
     if (!empty($_SESSION['email']))     //Jei vartotojas prisijungęs, valom logino kintamuosius ir rodom meniu
     {                                  // Sesijoje nustatyti kintamieji su reiksmemis is DB
                                        // $_SESSION['user'],$_SESSION['ulevel'],$_SESSION['userid'],$_SESSION['umail']
-		include("include/meniu.php");
+		include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/meniu.php");
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
 		
-        //include("include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
+        //include("../include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
 			
       <?php
@@ -50,7 +50,7 @@ include("include/functions.php");
 				echo "<div align=\"center\">";echo "<font size=\"4\" color=\"#ff0000\">".$_SESSION['message'] . "<br></font>";          
 		
                 echo "<table class=\"center\"><tr><td>";
-          include("include/login.php");                    // prisijungimo forma
+          include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/login.php");                    // prisijungimo forma
                 echo "</td></tr></table></div><br>";
            
 		  }
@@ -59,7 +59,7 @@ include("include/functions.php");
            <div style="background-color: aqua; padding: 10px;">
                 <p>Vardas: Matas</p>
                 <p>Pavardė: Mataitis</p>
-				<button onclick="window.location.href='matas.php'">
+				<button onclick="window.location.href='/Emart/parduotuve/naudotojas/matas.php'">
 					Peržiūrėti
     			</button>
 		   </div>
@@ -67,7 +67,7 @@ include("include/functions.php");
            <div style="background-color: aqua; padding: 10px;">
 				<p>Vardas: Tomas</p>
 				<p>Pavardė: Tomaitis</p>
-				<button onclick="window.location.href='tomas.php'">
+				<button onclick="window.location.href='/Emart/parduotuve/naudotojas/tomas.php'">
 					Peržiūrėti
     			</button>
 		   </div>
