@@ -2,7 +2,6 @@
 // meniu.php  rodomas meniu pagal vartotojo rolę
 
 if (!isset($_SESSION)) { header("Location: logout.php");exit;}
-include("include/nustatymai.php");
 $user=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
 $role="";
@@ -12,9 +11,8 @@ $role="";
 
      	echo "<table width=100% border=\"0\" cellspacing=\"1\" cellpadding=\"3\" class=\"meniu\">";
         echo "<tr><td>";
-        echo "Prisijungęs vartotojas: <b>".$user."</b>     Rolė: <b>".$role."</b> <br>";
         echo "</td></tr><tr><td>";
-        echo "[<a href=\"prekiuposisteme.php\">Visos prekės</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"prekiu_posisteme\perziureti_prekiu_sarasa.php\">Visos prekės</a>] &nbsp;&nbsp;";
         if ($userlevel == $user_roles[ADMIN_LEVEL] ) {
             echo "[<a href=\"pridetipreke.php\">Pridėti prekę</a>] &nbsp;&nbsp;";
        	}

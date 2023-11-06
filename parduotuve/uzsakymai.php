@@ -12,7 +12,7 @@ include("include/functions.php");
 <html>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
-        <title>Užsąkymai</title>
+        <title>Užsakymai</title>
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
 	<script>
@@ -25,7 +25,7 @@ include("include/functions.php");
 	</script>
     <body>
         <table class="center" ><tr><td>
-            <center><h1>Užsąkymai</h1></center>
+            <center><h1>Užsakymai</h1></center>
         </td></tr><tr><td> 
 		<?php
            

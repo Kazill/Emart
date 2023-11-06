@@ -12,6 +12,7 @@ define("DB_NAME", "isp");
 
 define("TBL_USERS", "Naudotojas");
 define("TBL_ADRESS", "Adresas");
+//define("TBL_ITEMS", "prekes");
 
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
 	"Administratorius"=>"1",
