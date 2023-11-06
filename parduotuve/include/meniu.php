@@ -19,6 +19,7 @@ $role="";
         echo "[<a href=\"/Emart/parduotuve/prekiuposisteme.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/naudotojas/naudotojai.php\">Naudotojų sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"/Emart/parduotuve/krepselis.php\">Krepšelis</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/logout.php\">Atsijungti</a>]";
       echo "</td></tr></table>";
 ?>       
