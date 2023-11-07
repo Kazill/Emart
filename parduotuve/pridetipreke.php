@@ -27,13 +27,13 @@ include("include/functions.php");
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
         include("include/meniu.php");
-        include("include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
+        //include("include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
                 <div style="text-align: center;color:green">
                     <br><br>
                     <h1>Pridėti prekę.</h1>
                 </div><br>
-				<form method='post' action='pridetiprekea.php'>
+				<form method='post' action='pridetipreke.php'>
 				Gamintojo suteiktas prekės kodas:<input name='id' type='text' required><br><br>
 				Gamintojas:<input name='gamintojas' type='text' required><br><br>
 				Pavadinimas:<input name='pavadinimas' type='text' required><br><br>
