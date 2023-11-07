@@ -101,7 +101,7 @@ function openPopup() {
     </div>
 </div>
 
-                                    <button onclick="window.location.href='/Emart/parduotuve/prekiu_posisteme/redaguoti_preke.php'">
+                                    <button onclick="window.location.href='/Emart/parduotuve/pridetipreke.php'">
 					                    Redaguoti
     			                    </button>
 

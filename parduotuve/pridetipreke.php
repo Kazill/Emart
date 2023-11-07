@@ -9,9 +9,14 @@ include("include/functions.php");
 ?>
 
 <html>
+<script>
+		function showConfirmDialog() {
+			var r = confirm("Ar tikrai norite išsaugoti?");
+		}
+	</script>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
-        <title>Pridėti prekę</title>
+        <title>Prekės informacija</title>
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
@@ -31,9 +36,9 @@ include("include/functions.php");
 ?>
                 <div style="text-align: center;color:green">
                     <br><br>
-                    <h1>Pridėti prekę.</h1>
+                    <h1>Prekės informacija</h1>
                 </div><br>
-				<form method='post' action='pridetipreke.php'>
+				<form method='post' onsubmit=showConfirmDialog()>
 				Gamintojo suteiktas prekės kodas:<input name='id' type='text' required><br><br>
 				Gamintojas:<input name='gamintojas' type='text' required><br><br>
 				Pavadinimas:<input name='pavadinimas' type='text' required><br><br>
