@@ -31,7 +31,7 @@ include("../include/functions.php");
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
 		
-        include("../include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
+        //include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
 			
              
