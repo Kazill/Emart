@@ -18,7 +18,7 @@ include("include/functions.php");
                                        // $_SESSION['user'],$_SESSION['ulevel'],$_SESSION['userid'],$_SESSION['umail']
 		//inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
-        header("Location:prekiuposisteme.php?");exit;
+        header("Location:prekiu_posisteme/perziureti_prekiu_sarasa.php");exit;
         //include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
       }              
           else {   			 
