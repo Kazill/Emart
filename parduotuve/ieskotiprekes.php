@@ -26,7 +26,7 @@ include("include/functions.php");
 		
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
-        
+        include("include/meniu.php");
         include("include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
                 <div style="text-align: center;color:green">

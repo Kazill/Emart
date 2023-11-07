@@ -31,15 +31,17 @@ include("../include/functions.php");
 		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
 		$_SESSION['prev']="index"; 
 		
-        //include("../include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
+        include("../include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
 ?>
 			
              
            <div style="background-color: aqua; padding: 10px;">
 				<pre><b>Pavadinimas 		Kaina 		Pardavėjas 	Daugiau </b></pre>
 				<pre>Laidas			10.20 		Petras 		<button onclick="window.location.href='preke1.php'">Peržiūrėti</button></pre>
-				<pre>Ekranas  		100.99 		Antanas 	<button onclick="window.location.href='preke2.php'">Peržiūrėti</button></pre>
-				<pre>Plančetė		500.55 		Juozas 		<button onclick="window.location.href='preke3.php'">Peržiūrėti</button></pre>
+				<pre>Ekranas  		100.99 		Antanas 	<button onclick="window.location.href='preke1.php'">Peržiūrėti</button></pre>
+				<pre>Plančetė		500.55 		Juozas 		<button onclick="window.location.href='preke1.php'">Peržiūrėti</button></pre>
+                <br>
+                <button onclick="window.location.href='../pridetipreke.php'">Įtraukti prekę</button>
 		   </div>
 <?php
         }
