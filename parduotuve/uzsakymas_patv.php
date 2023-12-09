@@ -14,7 +14,7 @@ include("include/functions.php");
                         <table style="border-width: 2px; border-style: dotted;"><tr><td>
                            Atgal į [<a href="uzsakymai.php">Užsąkymus</a>]</td></tr>
 				    </table>   <br>
-								<div align="center" style="background-color: aqua; padding: 10px;>
+								<div align="center" style="background-color: aqua; padding: 10px;">
                     			<table> <tr><td>           
                                 <center style="font-size:18pt;"><b>Užsąkymas</b></center>
                                 <p style="text-align:left;">Id: 5<br></p>
