@@ -80,9 +80,7 @@ function openPopup() {
 									<p style="text-align:left;">Kaina: 10.20<br></p>
                                     <p style="text-align:left;">Kiekis: 150<br></p>
                                     <p style="text-align:left;">Gamintojas: Gamintojas<br></p>
-                                    <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">
-					                    Įdėti į krepšelį
-    			                    </button>
+                                    <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">Įdėti į krepšelį</button>
                                     <br><br>
                                     <input type="button" id="popupbutton" onclick="openPopup()" value="Priskirti kategoriją"/>
 
