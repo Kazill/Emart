@@ -1,12 +1,8 @@
 <?php
 // index.php
-// jei vartotojas prisijungęs rodomas demonstracinis meniu pagal jo rolę
-// jei neprisijungęs - prisijungimo forma per include("login.php");
-// toje formoje daugiau galimybių...
-
 session_start();
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
-
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php"); // Include your DB connection file
 ?>
 
 <html>
@@ -28,49 +24,37 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
             <center><h1>Naudotojai</h1></center>
         </td></tr><tr><td> 
 <?php
-           
-    if (!empty($_SESSION['email']))     //Jei vartotojas prisijungęs, valom logino kintamuosius ir rodom meniu
-    {                                  // Sesijoje nustatyti kintamieji su reiksmemis is DB
-                                       // $_SESSION['user'],$_SESSION['ulevel'],$_SESSION['userid'],$_SESSION['umail']
+    if (!empty($_SESSION['email'])) {
 		include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/meniu.php");
-		inisession("part");   //   pavalom prisijungimo etapo kintamuosius
+		inisession("part");
 		$_SESSION['prev']="index"; 
-		
-        //include("../include/prekiuposistemesmeniu.php"); //įterpiamas meniu pagal vartotojo rolę
-?>
-			
-      <?php
-          }                
-          else {   			 
-              
-              if (!isset($_SESSION['prev'])) inisession("full");             // nustatom sesijos kintamuju pradines reiksmes 
-              else {if ($_SESSION['prev'] != "proclogin") inisession("part"); // nustatom pradines reiksmes formoms
-                   }  
-   			  // jei ankstesnis puslapis perdavė $_SESSION['message']
-				echo "<div align=\"center\">";echo "<font size=\"4\" color=\"#ff0000\">".$_SESSION['message'] . "<br></font>";          
-		
-                echo "<table class=\"center\"><tr><td>";
-          include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/login.php");                    // prisijungimo forma
-                echo "</td></tr></table></div><br>";
-           
-		  }
-?>
-	   <br>
-           <div style="background-color: aqua; padding: 10px;">
-                <p>Vardas: Matas</p>
-                <p>Pavardė: Mataitis</p>
-				<button onclick="window.location.href='/Emart/parduotuve/naudotojas/matas.php'">
-					Peržiūrėti
-    			</button>
-		   </div>
-           <br>
-           <div style="background-color: aqua; padding: 10px;">
-				<p>Vardas: Tomas</p>
-				<p>Pavardė: Tomaitis</p>
-				<button onclick="window.location.href='/Emart/parduotuve/naudotojas/tomas.php'">
-					Peržiūrėti
-    			</button>
-		   </div>
-            </body>
-</html>
+		// Your user list logic starts here
+        $sql = "SELECT * FROM naudotojai"; // Replace 'users' with your actual table name
+        $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
 
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<div style='background-color: aqua; padding: 10px;'>";
+                echo "<p>Vardas: " . htmlspecialchars($row['Vardas']) . "</p>"; // Replace 'first_name' with your column name
+                echo "<p>Pavardė: " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'last_name' with your column name
+                echo "<button onclick=\"window.location.href='/Emart/parduotuve/naudotojas/profilis.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Peržiūrėti</button>";
+
+                echo "</div><br>";
+            }
+        } else {
+            echo "No users found";
+        }
+		// User list logic ends here
+    } else {
+        // Code for users who are not logged in
+        if (!isset($_SESSION['prev'])) inisession("full");             
+        else {if ($_SESSION['prev'] != "proclogin") inisession("part");}  
+        echo "<div align=\"center\">";echo "<font size=\"4\" color=\"#ff0000\">".$_SESSION['message'] . "<br></font>";          
+        echo "<table class=\"center\"><tr><td>";
+        include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/login.php"); // Login form
+        echo "</td></tr></table></div><br>";
+    }
+?>
+        </td></tr></table>
+    </body>
+</html>
