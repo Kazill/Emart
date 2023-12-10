@@ -27,6 +27,7 @@ if (isset($_GET['id'])) {
     exit; // Stop further rendering if no ID is provided
 }
 $userLevel=htmlspecialchars($userData['Naudotojo_lygis']);
+$userEmail=htmlspecialchars($userData['El_pastas']);
 ?>
 <html>
     <head>  
@@ -55,7 +56,7 @@ $userLevel=htmlspecialchars($userData['Naudotojo_lygis']);
                 <p style="text-align:left;">Slaptažodis: <?php echo htmlspecialchars($userData['Slaptazodis']); ?></p>
                 <p style="text-align:left;">Ar blokuotas: <?php echo htmlspecialchars($userData['Ar_blokuotas']); ?></p>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/redaguoti.php?id=<?php echo $userId; ?>'">Redaguoti</button>
-                <button onclick="window.location.href='/Emart/parduotuve/naudotojas/pranesimas.php?id=<?php echo $userId; ?>'">Pranešimas</button>
+                <button onclick="window.location.href='/Emart/parduotuve/admin/pranesimas.php?email=<?php echo $userEmail; ?>'">Pranešimas</button>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/apeliacija.php?id=<?php echo $userId; ?>'">Apeliacija</button>
                 <?php 
                 if($userData['Ar_blokuotas'] == 0){
