@@ -6,5 +6,6 @@ session_start();
   $_SESSION['mail_error']="";
   $_SESSION['pass_error']="";
   $_SESSION['email']="email@gmail.com";
+  $_SESSION['userId']="2";
   header("Location:index.php?");exit;
 ?>

@@ -1,6 +1,6 @@
 #@(#) script.ddl
 
-DROP TABLE IF EXISTS uzsakymai;
+
 DROP TABLE IF EXISTS vertinimai;
 DROP TABLE IF EXISTS uzsakymo_prekes;
 
@@ -10,10 +10,12 @@ DROP TABLE IF EXISTS pranesimai;
 DROP TABLE IF EXISTS apeliacijos;
 DROP TABLE IF EXISTS pardavejai;
 DROP TABLE IF EXISTS adresai;
+DROP TABLE IF EXISTS uzsakymai;
 DROP TABLE IF EXISTS administratoriai;
 
 DROP TABLE IF EXISTS pirkejai;
 DROP TABLE IF EXISTS naudotojai;
+
 CREATE TABLE naudotojai
 (
 	Vardas varchar (255) NOT NULL,
@@ -21,7 +23,8 @@ CREATE TABLE naudotojai
 	El_pastas varchar (255) NOT NULL,
 	Slaptazodis varchar (255) NOT NULL,
 	Ar_blokuotas boolean NOT NULL,
-	id_Naudotojas int NOT NULL,
+	Naudotojo_lygis int NOT NULL,
+	id_Naudotojas int NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY(id_Naudotojas)
 );
 
@@ -30,7 +33,7 @@ CREATE TABLE administratoriai
 	idarbinimo_data date NOT NULL,
 	Tel_nr varchar (255) NOT NULL,
 	Alga double precision NOT NULL,
-	id_Administratorius int NOT NULL,
+	id_Administratorius int NOT NULL AUTO_INCREMENT,
 	fk_Naudotojasid_Naudotojas int NOT NULL,
 	PRIMARY KEY(id_Administratorius),
 	UNIQUE(fk_Naudotojasid_Naudotojas),
@@ -44,7 +47,7 @@ CREATE TABLE adresai
 	Pasto_kodas varchar (255) NOT NULL,
 	Gatve varchar (255) NOT NULL,
 	Namo_nr int NOT NULL,
-	id_Adresas int NOT NULL,
+	id_Adresas int NOT NULL AUTO_INCREMENT,
 	fk_Naudotojasid_Naudotojas int NOT NULL,
 	PRIMARY KEY(id_Adresas),
 	CONSTRAINT Priklauso FOREIGN KEY(fk_Naudotojasid_Naudotojas) REFERENCES naudotojai (id_Naudotojas)
@@ -56,7 +59,7 @@ CREATE TABLE pardavejai
 	patvirtinimo_data date NULL,
 	Ikeltu_prekiu_skaicius int NOT NULL,
 	vertinimu_vidurkis double precision NULL,
-	id_Pardavejas int NOT NULL,
+	id_Pardavejas int NOT NULL AUTO_INCREMENT,
 	fk_Naudotojasid_Naudotojas int NOT NULL,
 	PRIMARY KEY(id_Pardavejas),
 	UNIQUE(fk_Naudotojasid_Naudotojas),
@@ -68,7 +71,7 @@ CREATE TABLE apeliacijos
 	tekstas varchar (255) NOT NULL,
 	priezastis varchar (255) NOT NULL,
 	data date NOT NULL,
-	id_Apeliacija int NOT NULL,
+	id_Apeliacija int NOT NULL AUTO_INCREMENT,
 	fk_Pardavejasid_Pardavejas int NOT NULL,
 	PRIMARY KEY(id_Apeliacija),
 	CONSTRAINT Daro FOREIGN KEY(fk_Pardavejasid_Pardavejas) REFERENCES pardavejai (id_Pardavejas)
@@ -80,7 +83,7 @@ CREATE TABLE pranesimai
 	gavejas varchar (255) NOT NULL,
 	priezastis varchar (255) NOT NULL,
 	tekstas varchar (255) NOT NULL,
-	id_Pranesimas int NOT NULL,
+	id_Pranesimas int NOT NULL AUTO_INCREMENT,
 	fk_Administratoriusid_Administratorius int NOT NULL,
 	PRIMARY KEY(id_Pranesimas),
 	CONSTRAINT Raso FOREIGN KEY(fk_Administratoriusid_Administratorius) REFERENCES administratoriai (id_Administratorius)
@@ -93,7 +96,7 @@ CREATE TABLE prekes
 	kategorija varchar (255) NOT NULL,
 	gamintojas varchar (255) NULL,
 	ar_paslepta boolean NOT NULL,
-	id_Preke int NOT NULL,
+	id_Preke int NOT NULL AUTO_INCREMENT,
 	fk_Pardavėjasid_Pardavėjas int NOT NULL,
 	PRIMARY KEY(id_Preke),
 	CONSTRAINT Parduoda FOREIGN KEY(fk_Pardavėjasid_Pardavėjas) REFERENCES pardavejai (id_Pardavejas)
@@ -104,7 +107,7 @@ CREATE TABLE pirkejai
 	vertinimu_vidurkis double NULL,
 	uzsakymu_skaicius int NOT NULL,
 	komentaru_skaicius int NOT NULL,
-	id_Pirkejas int NOT NULL,
+	id_Pirkejas int NOT NULL AUTO_INCREMENT,
 	fk_Naudotojasid_Naudotojas int NOT NULL,
 	PRIMARY KEY(id_Pirkejas),
 	UNIQUE(fk_Naudotojasid_Naudotojas),
@@ -116,7 +119,7 @@ CREATE TABLE komentarai
 	tekstas varchar (255) NOT NULL,
 	data date NOT NULL,
 	laikas varchar (255) NOT NULL,
-	id_Komentaras int NOT NULL,
+	id_Komentaras int NOT NULL AUTO_INCREMENT,
 	fk_Prekeid_Preke int NOT NULL,
 	fk_Pirkejasid_Pirkejas int NOT NULL,
 	PRIMARY KEY(id_Komentaras),
@@ -130,7 +133,7 @@ CREATE TABLE uzsakymai
 	uzsakymo_kaina double precision NOT NULL,
 	būsena varchar (255) NOT NULL,
 	pristatymo_budas varchar (255) NOT NULL,
-	id_Uzsakymas int NOT NULL,
+	id_Uzsakymas int NOT NULL AUTO_INCREMENT,
 	fk_Pirkejasid_Pirkejas int NOT NULL,
 	fk_Administratoriusid_Administratorius int NOT NULL,
 	PRIMARY KEY(id_Uzsakymas),
@@ -142,7 +145,7 @@ CREATE TABLE uzsakymai
 CREATE TABLE uzsakymo_prekes
 (
 	kiekis int NOT NULL,
-	id_Uzsakymo_prekė int NOT NULL,
+	id_Uzsakymo_prekė int NOT NULL AUTO_INCREMENT,
 	fk_Uzsakymasid_Uzsakymas int NOT NULL,
 	fk_Prekeid_Preke int NOT NULL,
 	PRIMARY KEY(id_Uzsakymo_prekė),
@@ -154,7 +157,7 @@ CREATE TABLE vertinimai
 (
 	Ivertis int NOT NULL,
 	data date NOT NULL,
-	id_Vertinimas int NOT NULL,
+	id_Vertinimas int NOT NULL AUTO_INCREMENT,
 	fk_Pirkejasid_Pirkejas int NOT NULL,
 	fk_Prekeid_Preke int NOT NULL,
 	PRIMARY KEY(id_Vertinimas),
