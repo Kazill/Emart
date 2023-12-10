@@ -23,6 +23,7 @@ CREATE TABLE naudotojai
 	El_pastas varchar (255) NOT NULL,
 	Slaptazodis varchar (255) NOT NULL,
 	Ar_blokuotas boolean NOT NULL,
+	Naudotojo_lygis int NOT NULL,
 	id_Naudotojas int NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY(id_Naudotojas)
 );
