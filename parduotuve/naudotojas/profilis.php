@@ -33,6 +33,14 @@ if (isset($_GET['id'])) {
         <title>Naudotojas</title>
         <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css" >
     </head>
+    <script>
+		function confirmAction(remove, op) {
+			var r = confirm("Ar tikrai norite " + op + "!");
+			if (r === true) {
+				window.location.replace(remove);
+			}
+		}
+	</script>
     <body>   
         <table class="center"><tr><td><img src="/Emart/parduotuve/include/top.png"></td></tr><tr><td> 
             <table style="border-width: 2px; border-style: dotted;"><tr><td>
@@ -48,8 +56,15 @@ if (isset($_GET['id'])) {
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/redaguoti.php?id=<?php echo $userId; ?>'">Redaguoti</button>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/pranesimas.php?id=<?php echo $userId; ?>'">Pranešimas</button>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/apeliacija.php?id=<?php echo $userId; ?>'">Apeliacija</button>
-                <button onclick="confirmAction('/Emart/parduotuve/naudotojas/blokuoti.php?id=<?php echo $userId; ?>', 'Blokuoti');">Blokuoti</button>
-                <button onclick="confirmAction('/Emart/parduotuve/naudotojas/salinti.php?id=<?php echo $userId; ?>', 'Pašalinti');">Pašalinti</button>
+                <?php 
+                if($userData['Ar_blokuotas'] == 0){
+                    echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=1&id=$userId', 'Blokuoti');\">Blokuoti</button>";
+                }
+                else{
+                    echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=0&id=$userId', 'Atblokuoti');\">Atblokuoti</button>";
+                }
+                ?>
+                <button onclick="confirmAction('/Emart/parduotuve/admin/salinti.php?id=<?php echo $userId; ?>', 'Pašalinti');">Pašalinti</button>
             </div>
         </td></tr></table>           
     </body>
