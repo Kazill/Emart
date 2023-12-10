@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $userId = intval($_GET['id']); // Sanitize the input
 
     // Prepare a SQL query to fetch the user's data
-    $query = $conn->prepare("SELECT Vardas, Pavarde, El_pastas, Slaptazodis, Ar_blokuotas FROM naudotojai WHERE id_Naudotojas = ?");
+    $query = $conn->prepare("SELECT Vardas, Pavarde, El_pastas, Slaptazodis, Ar_blokuotas, Naudotojo_lygis FROM naudotojai WHERE id_Naudotojas = ?");
     $query->bind_param("i", $userId);
     $query->execute();
     $result = $query->get_result();
@@ -26,6 +26,7 @@ if (isset($_GET['id'])) {
     echo "No user ID provided";
     exit; // Stop further rendering if no ID is provided
 }
+$userLevel=htmlspecialchars($userData['Naudotojo_lygis']);
 ?>
 <html>
     <head>  
@@ -64,7 +65,7 @@ if (isset($_GET['id'])) {
                     echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=0&id=$userId', 'Atblokuoti');\">Atblokuoti</button>";
                 }
                 ?>
-                <button onclick="confirmAction('/Emart/parduotuve/admin/salinti.php?id=<?php echo $userId; ?>', 'Pašalinti');">Pašalinti</button>
+                <button onclick="confirmAction('/Emart/parduotuve/admin/salinti.php?id=<?php echo $userId; ?>&level=<?php echo $userLevel; ?>', 'Pašalinti');">Pašalinti</button>
             </div>
         </td></tr></table>           
     </body>

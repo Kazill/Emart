@@ -25,6 +25,8 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
         </td></tr><tr><td> 
 <?php
     if (!empty($_SESSION['email'])) {
+        echo "<center style='color: red'>".$_SESSION['message']."</center>";
+        $_SESSION['message']='';
 		include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/meniu.php");
 		inisession("part");
 		$_SESSION['prev']="index"; 

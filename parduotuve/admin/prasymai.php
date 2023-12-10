@@ -17,6 +17,8 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
         </td></tr><tr><td> 
 <?php
     if (!empty($_SESSION['email'])) {
+        echo "<center style='color: red'>".$_SESSION['message']."</center>";
+        $_SESSION['message']='';
 		include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/meniu.php");
 		inisession("part");
 		$_SESSION['prev']="prasymai"; 
@@ -31,7 +33,7 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
                 echo "<p>Pavardė: " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'last_name' with your column name
                 echo "<p>El. paštas: " . htmlspecialchars($row['El_pastas']) . "</p>";
                 echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/patvirtinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Patvirtinti</button>";
-                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/istrintPrasyma.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Ištrinti prašymą</button>";
+                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/salinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "&level=2'\">Ištrinti prašymą</button>";
                 echo "</div><br>";
             }
         } else {

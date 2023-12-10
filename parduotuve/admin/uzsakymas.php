@@ -56,7 +56,7 @@ if (isset($_GET['id'])) {
         </td></tr><tr><td>
         <center><b>Prekės</b></center>
         <?php
-        $sql = "SELECT * FROM uzsakymai INNER JOIN uzsakymo_prekes ON fk_Uzsakymasid_Uzsakymas = id_Uzsakymas INNER JOIN prekes ON fk_Prekeid_Preke=id_Preke INNER JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Uzsakymas='{$Id}'"; // Replace 'users' with your actual table name
+        $sql = "SELECT * FROM uzsakymai INNER JOIN uzsakymo_prekes ON fk_Uzsakymasid_Uzsakymas = id_Uzsakymas INNER JOIN prekes ON fk_Prekeid_Preke=id_Preke LEFT JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Uzsakymas='{$Id}'"; // Replace 'users' with your actual table name
         $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
 
         if (mysqli_num_rows($result) > 0) {
