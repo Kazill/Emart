@@ -1,8 +1,8 @@
 <?php
 // index.php
 session_start();
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php"); // Include your DB connection file
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php"); // Include your DB connection file
 ?>
 
 <html>

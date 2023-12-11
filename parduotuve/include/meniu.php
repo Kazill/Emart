@@ -7,7 +7,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['tipas'])) {
 }
 // meniu.php  rodomas meniu pagal vartotojo rolę
 if (!isset($_SESSION)) { header($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/logout.php");exit;}
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 $email=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
 $role="";
