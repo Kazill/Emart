@@ -32,8 +32,8 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
                 echo "<p>Vardas: " . htmlspecialchars($row['Vardas']) . "</p>"; // Replace 'first_name' with your column name
                 echo "<p>Pavardė: " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'last_name' with your column name
                 echo "<p>El. paštas: " . htmlspecialchars($row['El_pastas']) . "</p>";
-                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/patvirtinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Patvirtinti</button>";
-                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/salinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "&level=2'\">Ištrinti prašymą</button>";
+                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/patvirtinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Patvirtinti</button>\n";
+                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/salinti.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "&level=2'\">Ištrinti prašymą</button>\n";
                 echo "</div><br>";
             }
         } else {

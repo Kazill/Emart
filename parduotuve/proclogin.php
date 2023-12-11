@@ -8,5 +8,6 @@ session_start();
   $_SESSION['message']="";
   $_SESSION['email']="email@gmail.com";
   $_SESSION['userId']="2";
+  $_SESSION['uLevel']='3';
   header("Location:index.php?");exit;
 ?>

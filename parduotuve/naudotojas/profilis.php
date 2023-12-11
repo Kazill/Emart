@@ -56,17 +56,22 @@ $userEmail=htmlspecialchars($userData['El_pastas']);
                 <p style="text-align:left;">Slaptažodis: <?php echo htmlspecialchars($userData['Slaptazodis']); ?></p>
                 <p style="text-align:left;">Ar blokuotas: <?php echo htmlspecialchars($userData['Ar_blokuotas']); ?></p>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/redaguoti.php?id=<?php echo $userId; ?>'">Redaguoti</button>
-                <button onclick="window.location.href='/Emart/parduotuve/admin/pranesimas.php?email=<?php echo $userEmail; ?>'">Pranešimas</button>
                 <button onclick="window.location.href='/Emart/parduotuve/naudotojas/apeliacija.php?id=<?php echo $userId; ?>'">Apeliacija</button>
-                <?php 
-                if($userData['Ar_blokuotas'] == 0){
-                    echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=1&id=$userId', 'Blokuoti');\">Blokuoti</button>";
-                }
-                else{
-                    echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=0&id=$userId', 'Atblokuoti');\">Atblokuoti</button>";
-                }
+                
+                
+                <?php
+                    if($_SESSION['uLevel']=='3')
+                    {
+                        echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/pranesimas.php?email=$userEmail'\">Pranešimas</button>\n";
+                        if($userData['Ar_blokuotas'] == 0){
+                            echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=1&id=$userId', 'Blokuoti');\">Blokuoti</button>\n";
+                        }
+                        else{
+                            echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=0&id=$userId', 'Atblokuoti');\">Atblokuoti</button>\n";
+                        }
+                        echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/salinti.php?id=$userId&level=$userLevel', 'Pašalinti');\">Pašalinti</button>\n";
+                    }
                 ?>
-                <button onclick="confirmAction('/Emart/parduotuve/admin/salinti.php?id=<?php echo $userId; ?>&level=<?php echo $userLevel; ?>', 'Pašalinti');">Pašalinti</button>
             </div>
         </td></tr></table>           
     </body>
