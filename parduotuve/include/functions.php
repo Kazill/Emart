@@ -65,6 +65,26 @@ function checkname ($username){   // Vartotojo vardo sintakse
 				return true;
 			}
    }
+   function checkPasswordStrength($password) {
+    // Set a minimum length for the password
+    $minLength = 8;
+
+    // Regular expression to check if the password includes:
+    // at least one digit (?=.*\d)
+    // at least one lowercase character (?=.*[a-z])
+    // at least one uppercase character (?=.*[A-Z])
+    // at least one special character (?=.*\W)
+    // and is at least $minLength characters long .{$minLength,}
+    $pattern = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{' . $minLength . ',}$/';
+
+    // Check the strength of the password against the pattern
+    if (preg_match($pattern, $password)) {
+        return true; // The password is strong
+    } else {
+        $_SESSION['pass_error'] = "<font size=\"2\" color=\"#ff0000\">* Slaptažodis nėra pakankamai stiprus. Jis turi būti mažiausiai 8 simbolių ilgio ir turėti mažąsias ir didžiąsias raides, skaičius bei specialiuosius simbolius.</font>";
+        return false; // The password is not strong enough
+    }
+}
 
  function checkdb($mail) {  // iesko DB pagal varda, grazina {vardas,slaptazodis,lygis,id} ir nustato name_error
 		 $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);

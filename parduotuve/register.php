@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // register.php registracijos forma
 // jei pats registruojasi rolė = DEFAULT_LEVEL, jei registruoja ADMIN_LEVEL vartotojas, rolę parenka
 // Kaip atsiranda vartotojas: nustatymuose $uregister=
@@ -8,8 +11,9 @@
 session_start();
 if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;} // registracija galima kai nera userio arba adminas
 // kitaip kai sesija expirinasi blogai, laikykim, kad prev vistik visada nustatoma
-include("include/nustatymai.php");
-include("include/functions.php");
+include_once("include/nustatymai.php");
+include_once("include/functions.php");
+
 if ($_SESSION['prev'] != "procregister")  inisession("part");  // pradinis bandymas registruoti
 
 $_SESSION['prev']="register";
@@ -27,7 +31,7 @@ $_SESSION['prev']="register";
 				    </table>   
 								<div align="center">
                     			<table> <tr><td>
-                                    <form action="proclogin.php" method="POST" class="login">              
+								<form action="procregister.php" method="POST" class="login">
                                                 <center style="font-size:18pt;"><b>Registracija</b></center>
 										
 									<p style="text-align:left;">Vardas:<br>

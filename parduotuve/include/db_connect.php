@@ -1,13 +1,18 @@
 <?php
 // db_connect.php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+// $host = 'localhost';    // Hostname of your database server
+// $user = 'root';    // Username for database access
+// $pass = '';    // Password for database access
+// $db   = 'isp';    // Name of your database
 
-$host = 'localhost';    // Hostname of your database server
-$user = 'root';    // Username for database access
-$pass = '';    // Password for database access
-$db   = 'isp';    // Name of your database
+// // Create a new database connection
+// $conn = new mysqli($host, $user, $pass, $db);
 
-// Create a new database connection
-$conn = new mysqli($host, $user, $pass, $db);
+
+// This is for the nustatymai database connection
+ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+ $conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
 // Check the connection
 if ($conn->connect_error) {

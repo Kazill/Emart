@@ -1,11 +1,21 @@
 <?php
+// After starting the session, you can now check if specific session variables are set.
+if (!isset($_SESSION['email']) || !isset($_SESSION['tipas'])) {
+    // If the required session variables are not set, redirect to the logout page.
+    header("Location: /Emart/parduotuve/logout.php");
+    exit;
+}
 // meniu.php  rodomas meniu pagal vartotojo rolę
-
-if (!isset($_SESSION)) { header("Location: logout.php");exit;}
+if (!isset($_SESSION)) { header($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/logout.php");exit;}
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 $email=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
 $role="";
+$user_roles = [
+  'Pirkėjas' => 0,
+  'Pardavėjas' => 1,
+  'Administratorius' => 2
+];
 {foreach($user_roles as $x=>$x_value)
 			      {if ($x_value == $userlevel) $role=$x;}
 } 

@@ -8,12 +8,9 @@ define("DB_NAME", "isp");
 //define("DB_SERVER", "localhost");
 //define("DB_USER", "stud");
 //define("DB_PASS", "stud");
-//define("DB_NAME", "vartvald");
+//define("DB_NAME", "isp");
 
 define("TBL_USERS", "Naudotojas");
-define("TBL_ADRESS", "Adresas");
-//define("TBL_ITEMS", "prekes");
-
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
 	"Administratorius"=>"1",
 	"Darbuotojas"=>"2",
