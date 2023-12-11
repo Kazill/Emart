@@ -26,11 +26,11 @@ $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos u
         echo "</td></tr><tr><td>";
 
         echo "[<a href=\"/Emart/parduotuve/admin/uzsakymai.php\">Užsakymų sąrašas</a>] &nbsp;&nbsp;";
-        echo "[<a href=\"/Emart/parduotuve/prekiu_posisteme/perziureti_prekiu_sarasa.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"/Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/naudotojas/naudotojai.php\">Naudotojų sąrašas</a>] &nbsp;&nbsp;";
-        if($_SESSION['uLevel']=='3')
+        if($_SESSION['tipas']=='1')
         {
-        echo "[<a href=\"/Emart/parduotuve/admin/prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
+              echo "[<a href=\"/Emart/parduotuve/admin/prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
         }
         echo "[<a href=\"/Emart/parduotuve/krepselis.php\">Krepšelis</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/logout.php\">Atsijungti</a>]";

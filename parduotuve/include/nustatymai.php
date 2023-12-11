@@ -3,7 +3,7 @@
 define("DB_SERVER", "158.129.26.35");
 define("DB_USER", "root");
 define("DB_PASS", "313kambarys313");
-define("DB_NAME", "isp");
+define("DB_NAME", "isp"); 
 
 //define("DB_SERVER", "localhost");
 //define("DB_USER", "stud");

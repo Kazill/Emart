@@ -60,7 +60,7 @@ $userEmail=htmlspecialchars($userData['El_pastas']);
                 
                 
                 <?php
-                    if($_SESSION['uLevel']=='3')
+                    if($_SESSION['tipas']=='1')
                     {
                         echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/pranesimas.php?email=$userEmail'\">Pranešimas</button>\n";
                         if($userData['Ar_blokuotas'] == 0){
