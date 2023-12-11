@@ -8,43 +8,35 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 <html>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
-        <title>Prekių posistemė</title>
+        <title>Užsąkymai</title>
         <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css" >
     </head>
-	<script>
-		function showConfirmDialog(removeId) {
-			var r = confirm("Ar tikrai norite pašalinti!");
-			if (r === true) {
-				window.location.replace("salintipreke.php?id=" + removeId);
-			}
-		}
-	</script>
     <body>
         <table class="center" ><tr><td>
-            <center><h1>Naudotojai</h1></center>
+            <center><h1>Užsąkymai</h1></center>
         </td></tr><tr><td> 
 <?php
     if (!empty($_SESSION['email'])) {
-        echo "<center style='color: red'>".$_SESSION['message']."</center>";
-        $_SESSION['message']='';
 		include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/meniu.php");
 		inisession("part");
-		$_SESSION['prev']="index"; 
+		$_SESSION['prev']="uzsakymai"; 
 		// Your user list logic starts here
-        $sql = "SELECT * FROM naudotojai"; // Replace 'users' with your actual table name
+        $sql = "SELECT * FROM uzsakymai INNER JOIN pirkejai ON fk_Pirkejasid_Pirkejas = id_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas"; // Replace 'users' with your actual table name
         $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
 
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
                 echo "<div style='background-color: aqua; padding: 10px;'>";
-                echo "<p>Vardas: " . htmlspecialchars($row['Vardas']) . "</p>"; // Replace 'first_name' with your column name
-                echo "<p>Pavardė: " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'last_name' with your column name
-                echo "<button onclick=\"window.location.href='/Emart/parduotuve/naudotojas/profilis.php?id=" . htmlspecialchars($row['id_Naudotojas']) . "'\">Peržiūrėti</button>";
+                echo "<p>Užsąkymo Id: " . htmlspecialchars($row['id_Uzsakymas']) . "</p>";
+                echo "<p>Pirkėjas: " . htmlspecialchars($row['Vardas']). " " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'first_name' with your column name
+                echo "<p>Užsąkymo data: " . htmlspecialchars($row['data']) . "</p>";
+                echo "<p>Užsąkymo kaina: " . htmlspecialchars($row['uzsakymo_kaina']) . "</p>";
+                echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/uzsakymas.php?id=" . htmlspecialchars($row['id_Uzsakymas']) . "'\">Peržiūrėti</button>";
 
                 echo "</div><br>";
             }
         } else {
-            echo "No users found";
+            echo "No orders found";
         }
 		// User list logic ends here
     } else {

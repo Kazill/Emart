@@ -10,12 +10,7 @@ if (!isset($_SESSION)) { header($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/l
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 $email=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
-$role="";
-$user_roles = [
-  'Pirkėjas' => 0,
-  'Pardavėjas' => 1,
-  'Administratorius' => 2
-];
+$role=$_SESSION['uLevel'];
 {foreach($user_roles as $x=>$x_value)
 			      {if ($x_value == $userlevel) $role=$x;}
 } 
@@ -25,10 +20,13 @@ $user_roles = [
         echo "Prisijungęs vartotojas: <b>".$email."</b>     Rolė: <b>".$role."</b> <br>";
         echo "</td></tr><tr><td>";
 
-        echo "[<a href=\"/Emart/parduotuve/uzsakymai.php\">Užsakymų sąrašas</a>] &nbsp;&nbsp;";
+        echo "[<a href=\"/Emart/parduotuve/admin/uzsakymai.php\">Užsakymų sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/prekiu_posisteme/perziureti_prekiu_sarasa.php\">Prekių sąrašas</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/naudotojas/naudotojai.php\">Naudotojų sąrašas</a>] &nbsp;&nbsp;";
-        echo "[<a href=\"/Emart/parduotuve/prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
+        if($_SESSION['uLevel']=='3')
+        {
+        echo "[<a href=\"/Emart/parduotuve/admin/prasymai.php\">Prašymai</a>] &nbsp;&nbsp;";
+        }
         echo "[<a href=\"/Emart/parduotuve/krepselis.php\">Krepšelis</a>] &nbsp;&nbsp;";
         echo "[<a href=\"/Emart/parduotuve/logout.php\">Atsijungti</a>]";
       echo "</td></tr></table>";
