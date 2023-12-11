@@ -10,7 +10,12 @@ if (!isset($_SESSION)) { header($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/l
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 $email=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
-$role=$_SESSION['uLevel'];
+$role="";
+$user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
+  "Undefined"=>"0",
+	"Administratorius"=>"1",
+	"Darbuotojas"=>"2",
+	"Klientas"=>"3",);
 {foreach($user_roles as $x=>$x_value)
 			      {if ($x_value == $userlevel) $role=$x;}
 } 
