@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
         $_SESSION['tipas'] = $row['Naudotojo_lygis']; // Assuming 'Naudotojo_lygis' is the column name for user level
         $_SESSION['email']=$email;
         $_SESSION['message'] = "Sėkmingai prisijungėte!";
-
+        $_SESSION['uLevel']='3';
         // Redirect to a logged-in page
         header("Location: /Emart/parduotuve/index.php");
         exit;
