@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'C:\xampp\composer\vendor\autoload.php';
 ini_set("display_errors", "1");
 error_reporting(E_ALL);
 session_start();
@@ -21,15 +24,33 @@ $_SESSION['prev']="zinutes";
 	    $text =$_POST['tekstas'];
 	    $sql = "INSERT INTO pranesimai (gavejas, fk_Administratoriusid_Administratorius, data, tekstas, priezastis) VALUES ('$gavejas', '$siuntejas', now(), '$text', '$header')";
 	    if (!mysqli_query($conn, $sql))  $_SESSION['message']="Klaida įrašant:" .mysqli_error($dbc);	
-        $text = wordwrap($text,70);
-        try{
-            $mail=mail($gavejas,$header,$text);
-            echo $mail;
-            $_SESSION['message']=$mail."Išsiųstas pranešimas";
-        }
-        catch(Exception $e){
-            $_SESSION['message']="Klaida siunčiant:" . $e;
-        }
+
+        $mail = new PHPMailer(true);
+        try {
+
+            // Server settings
+            $mail->SMTPDebug = 2;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'parduotuve.email@gmail.com';                     // SMTP username
+            $mail->Password   = 'bwht lrdu avur xilh';                               // SMTP password
+            $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            // Recipients
+            $mail->setFrom('parduotuve.email@gmail.com', 'Elektroniniu prekiu parduotuve');    // Add a recipient
+            $mail->addAddress($gavejas);               // Name is optional
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = $header;
+            $mail->Body    = $text;
+            $mail->send();
+            $_SESSION['message']="Pranešimas išsiųstas";
+} catch(Exception $e){
+    //Something went bad
+    $_SESSION['message']="Klaida siunčiant:" . $mail->ErrorInfo;
+}
+
         header('Location: /Emart/parduotuve/naudotojas/naudotojai.php');
         exit();
     }

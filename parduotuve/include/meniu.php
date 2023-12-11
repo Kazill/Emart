@@ -5,7 +5,7 @@ if (!isset($_SESSION)) { header("Location: logout.php");exit;}
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 $email=$_SESSION['email'];
 $userlevel=$_SESSION['tipas'];
-$role="";
+$role=$_SESSION['uLevel'];
 {foreach($user_roles as $x=>$x_value)
 			      {if ($x_value == $userlevel) $role=$x;}
 } 
