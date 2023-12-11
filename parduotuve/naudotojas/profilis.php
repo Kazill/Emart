@@ -1,8 +1,8 @@
 <?php
 session_start();
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php"); // Include your database connection file
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php"); // Include your database connection file
 
 // Check if the 'id' parameter is set in the URL
 if (isset($_GET['id'])) {
