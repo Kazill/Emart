@@ -31,11 +31,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.p
         $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
         ?>
                 <div style="background-color: aqua; padding: 10px;">
-				<pre><b>Pavadinimas 		Kaina 		Pardavėjas 	Daugiau </b></pre>
+				<table style="width:100%;"><tr><td><b>Pavadinimas</b></td><td><b>Kaina</b></td><td><b>Pardavėjas</b></td><td><b>Daugiau</b></td></tr>
                 <?php               
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<pre>". htmlspecialchars($row['pavadinimas'])."			".htmlspecialchars($row['kaina'])." 		".htmlspecialchars($row['Vardas'])." ".htmlspecialchars($row['Pavarde'])." 	<button onclick=\"window.location.href='preke1.php'\">Peržiūrėti</button></pre>";
+                echo "<tr><td>". htmlspecialchars($row['pavadinimas'])."</td><td>".htmlspecialchars($row['kaina'])."</td><td>".htmlspecialchars($row['Vardas'])." ".htmlspecialchars($row['Pavarde'])."</td><td><button onclick=\"window.location.href='preke1.php'\">Peržiūrėti</button></td></tr>";
             }
             } else {
                     
@@ -52,6 +52,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.p
                 echo "</td></tr></table></div><br>";
              }
             ?>
+                </table>
             <button onclick="window.location.href='../pridetipreke.php'">Įtraukti prekę</button>
 		   </div>
             </td></tr></table>
