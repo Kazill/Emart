@@ -27,7 +27,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.p
         inisession("part");
         $_SESSION['prev']="prekiu_sarasas"; 
                                        // Your user list logic starts here
-        $sql = "SELECT * FROM prekes INNER JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas"; // Replace 'users' with your actual table name
+        if($_SESSION['tipas']== 1){
+        $sql = "SELECT * FROM prekes INNER JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas";
+        }
+        else{
+            $sql = "SELECT * FROM prekes INNER JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE ar_paslepta='0'";
+        } // Replace 'users' with your actual table name
         $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
         ?>
                 <div style="background-color: aqua; padding: 10px;">
@@ -35,7 +40,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.p
                 <?php               
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<tr><td>". htmlspecialchars($row['pavadinimas'])."</td><td>".htmlspecialchars($row['kaina'])."</td><td>".htmlspecialchars($row['Vardas'])." ".htmlspecialchars($row['Pavarde'])."</td><td><button onclick=\"window.location.href='preke1.php'\">Peržiūrėti</button></td></tr>";
+                echo "<tr><td>". htmlspecialchars($row['pavadinimas'])."</td><td>".htmlspecialchars($row['kaina'])."</td><td>".htmlspecialchars($row['Vardas'])." ".htmlspecialchars($row['Pavarde'])."</td><td><button onclick=\"window.location.href='preke.php?id=". htmlspecialchars($row['id_Preke']) . "'\">Peržiūrėti</button></td></tr>";
             }
             } else {
                     

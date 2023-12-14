@@ -12,7 +12,7 @@ require_once("include/functions.php"); // Assuming functions.php contains necess
 // Check if the user is already logged in
 if (!empty($_SESSION['user_email'])) {
     // Redirect to the main page of the user
-    header("Location: prekiu_posisteme/perziureti_prekiu_sarasa.php");
+    header("Location: prekiu_posisteme/prekiu_sarasa.sphp");
     exit;
 }
 
@@ -47,7 +47,7 @@ if (!isset($_SESSION['prev'])) {
                     // $_SESSION['user'],$_SESSION['ulevel'],$_SESSION['userid'],$_SESSION['umail']
                     inisession("part");   //   pavalom prisijungimo etapo kintamuosius
                     $_SESSION['prev'] = "index";
-                    header("Location:prekiu_posisteme/perziureti_prekiu_sarasa.php");
+                    header("Location:prekiu_posisteme/prekiu_sarasas.php");
                     exit;
                     //include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
                 } else {
