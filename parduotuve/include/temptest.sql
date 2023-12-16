@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 09:39 AM
+-- Generation Time: Dec 16, 2023 at 11:46 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -22,6 +22,23 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS vertinimai;
+DROP TABLE IF EXISTS uzsakymo_prekes;
+
+DROP TABLE IF EXISTS komentarai;
+DROP TABLE IF EXISTS prekes;
+DROP TABLE IF EXISTS pranesimai;
+DROP TABLE IF EXISTS apeliacijos;
+DROP TABLE IF EXISTS pardavejai;
+DROP TABLE IF EXISTS adresai;
+DROP TABLE IF EXISTS uzsakymai;
+DROP TABLE IF EXISTS administratoriai;
+
+DROP TABLE IF EXISTS pirkejai;
+DROP TABLE IF EXISTS naudotojai;
+
+
 
 --
 -- Table structure for table `administratoriai`
@@ -107,6 +124,15 @@ CREATE TABLE `komentarai` (
   `fk_Prekeid_Preke` int(11) NOT NULL,
   `fk_Pirkejasid_Pirkejas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `komentarai`
+--
+
+INSERT INTO `komentarai` (`tekstas`, `data`, `laikas`, `id_Komentaras`, `fk_Prekeid_Preke`, `fk_Pirkejasid_Pirkejas`) VALUES
+('komentaras', '2023-12-14', '16:00', 2, 3, 3),
+('gera preke', '0000-00-00', '15:25', 3, 6, 5),
+('gera preke', '2023-05-12', '15:25', 4, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -231,8 +257,8 @@ CREATE TABLE `prekes` (
 --
 
 INSERT INTO `prekes` (`pavadinimas`, `kaina`, `kategorija`, `gamintojas`, `ar_paslepta`, `id_Preke`, `fk_Pardavėjasid_Pardavėjas`) VALUES
-('pav', 20.01, 'kat', 'gam', 1, 3, 5),
-('Prailginimo laidas', 5.51, 'laidai', 'utex', 0, 4, 5),
+('pav', 20.01, 'kat', 'gam', 0, 3, 5),
+('Prailginimo laidas', 5.51, 'laidai', 'utex', 1, 4, 5),
 ('Lygintuvas', 105.51, 'Namu prietasai', 'utex', 0, 5, 5),
 ('Krovejas', 5.51, 'laidai', 'utex', 0, 6, 5),
 ('Siurblys', 50.51, 'prietaisai', 'utex', 0, 7, 5);
@@ -397,7 +423,7 @@ ALTER TABLE `apeliacijos`
 -- AUTO_INCREMENT for table `komentarai`
 --
 ALTER TABLE `komentarai`
-  MODIFY `id_Komentaras` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Komentaras` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `naudotojai`

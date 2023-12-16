@@ -71,14 +71,20 @@ if (isset($_GET['id'])) {
         
         <center><b>Komentarai</b></center>
         <?php
-        $sql = "SELECT * FROM prekes INNER JOIN komentarai ON fk_Prekeid_Preke = id_Preke LEFT JOIN pirkejai ON fk_Pirkejasid_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke='{$Id}'"; // Replace 'users' with your actual table name
+        $sql = "SELECT * FROM prekes INNER JOIN komentarai ON fk_Prekeid_Preke = id_Preke LEFT JOIN pirkejai ON fk_Pirkejasid_Pirkejas=id_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke='{$Id}'"; // Replace 'users' with your actual table name
         $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
 
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<div style='background-color: aqua; padding: 10px;'>";
-                echo "<p>Pirkėjas: " . htmlspecialchars($row['Vardas']). " " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'first_name' with your column name
-                echo "<p>tekstas " . htmlspecialchars($row['tekstas']) . "</p>";
+                echo "<div style='background-color: blue; border: solid; padding-bottom:10px; padding-left:10px; padding-right:10px'>";
+                echo "<p>". htmlspecialchars($row['Vardas']). " " . htmlspecialchars($row['Pavarde']) ." ". htmlspecialchars($row['data']). " " . htmlspecialchars($row['laikas']) . ":</p>";
+                echo "<p style='background-color: aqua; padding: 10px; border: dashed'><i>" . htmlspecialchars($row['tekstas']) . "</i></p>";
+                
+                if($_SESSION['tipas']=='1')
+                    {
+                        $kid=htmlspecialchars($row['id_Komentaras']);
+                        echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/trinti_komentara.php?pid=$Id&id=$kid', 'Trinti');\">Trinti</button>\n";
+                    }
                 echo "</div><br>";
             }
         } else {
