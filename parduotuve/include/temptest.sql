@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2023 at 11:46 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Dec 17, 2023 at 09:21 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,23 +22,6 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
-DROP TABLE IF EXISTS vertinimai;
-DROP TABLE IF EXISTS uzsakymo_prekes;
-
-DROP TABLE IF EXISTS komentarai;
-DROP TABLE IF EXISTS prekes;
-DROP TABLE IF EXISTS pranesimai;
-DROP TABLE IF EXISTS apeliacijos;
-DROP TABLE IF EXISTS pardavejai;
-DROP TABLE IF EXISTS adresai;
-DROP TABLE IF EXISTS uzsakymai;
-DROP TABLE IF EXISTS administratoriai;
-
-DROP TABLE IF EXISTS pirkejai;
-DROP TABLE IF EXISTS naudotojai;
-
-
 
 --
 -- Table structure for table `administratoriai`
@@ -113,6 +96,27 @@ INSERT INTO `apeliacijos` (`tekstas`, `priezastis`, `data`, `id_Apeliacija`, `fk
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kategorijos`
+--
+
+CREATE TABLE `kategorijos` (
+  `id` int(11) NOT NULL,
+  `pavadinimas` varchar(56) NOT NULL,
+  `prekiu_sk` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kategorijos`
+--
+
+INSERT INTO `kategorijos` (`id`, `pavadinimas`, `prekiu_sk`) VALUES
+(1, 'kita', NULL),
+(3, 'kompiuterių priedai', NULL),
+(5, 'kompiuteriai', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `komentarai`
 --
 
@@ -161,7 +165,8 @@ INSERT INTO `naudotojai` (`Vardas`, `Pavarde`, `El_pastas`, `Slaptazodis`, `Ar_b
 ('administratorius', 'aa', 'ad@gmail.com', '$2y$10$03DXa4Btk7EeBPSlg99n8eoOYwg12vp/A53XD0Y1DFrDQji.Ytrka', 0, 1, 12),
 ('pardavejas', 'par', 'pr@gmail.com', '$2y$10$SnQ2qUvI3Rc92IPrEi3jduHx3U3tqodTj67MXuf7lzqSKk8PuJtKO', 0, 2, 13),
 ('nejus', 'netiejus', 'netej@gmail.com', '$2y$10$reyetV3DBABV5aI66DD5nu6mYodHWzO6fA7o8Cilm1R4lIa2uo1va', 0, 3, 14),
-('pranas', 'pedantas', 'pr@gmail.com', '$2y$10$2jWII2qXlx9saHuFduNRJuSQ.5dux.UIAMn02ucF.zOmEtra7Tg6q', 0, 2, 15);
+('pranas', 'pedantas', 'pr@gmail.com', '$2y$10$2jWII2qXlx9saHuFduNRJuSQ.5dux.UIAMn02ucF.zOmEtra7Tg6q', 0, 2, 15),
+('test', 'test', 'test@test.com', '$2y$10$f8ykqNYjaAhyDdiS3/W4oe6s8uoq7K4yCWEtSzkn/ZBl7atTV1baS', 0, 3, 17);
 
 -- --------------------------------------------------------
 
@@ -245,7 +250,7 @@ INSERT INTO `pranesimai` (`data`, `gavejas`, `priezastis`, `tekstas`, `id_Pranes
 CREATE TABLE `prekes` (
   `pavadinimas` varchar(255) NOT NULL,
   `kaina` double NOT NULL,
-  `kategorija` varchar(255) NOT NULL,
+  `kategorija` int(11) NOT NULL,
   `gamintojas` varchar(255) DEFAULT NULL,
   `ar_paslepta` tinyint(1) NOT NULL,
   `id_Preke` int(11) NOT NULL,
@@ -257,11 +262,12 @@ CREATE TABLE `prekes` (
 --
 
 INSERT INTO `prekes` (`pavadinimas`, `kaina`, `kategorija`, `gamintojas`, `ar_paslepta`, `id_Preke`, `fk_Pardavėjasid_Pardavėjas`) VALUES
-('pav', 20.01, 'kat', 'gam', 0, 3, 5),
-('Prailginimo laidas', 5.51, 'laidai', 'utex', 1, 4, 5),
-('Lygintuvas', 105.51, 'Namu prietasai', 'utex', 0, 5, 5),
-('Krovejas', 5.51, 'laidai', 'utex', 0, 6, 5),
-('Siurblys', 50.51, 'prietaisai', 'utex', 0, 7, 5);
+('pav', 20.01, 1, 'gam', 0, 3, 5),
+('Prailginimo laidas', 5.51, 1, 'utex', 1, 4, 5),
+('Lygintuvas', 105.51, 1, 'utex', 0, 5, 5),
+('Krovejas', 5.51, 1, 'utex', 0, 6, 5),
+('Siurblys', 50.51, 1, 'utex', 0, 7, 5),
+('lenta', 10, 1, 'kita', 0, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -332,6 +338,12 @@ ALTER TABLE `apeliacijos`
   ADD KEY `Daro` (`fk_Pardavejasid_Pardavejas`);
 
 --
+-- Indexes for table `kategorijos`
+--
+ALTER TABLE `kategorijos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `komentarai`
 --
 ALTER TABLE `komentarai`
@@ -371,7 +383,8 @@ ALTER TABLE `pranesimai`
 --
 ALTER TABLE `prekes`
   ADD PRIMARY KEY (`id_Preke`),
-  ADD KEY `Parduoda` (`fk_Pardavėjasid_Pardavėjas`);
+  ADD KEY `Parduoda` (`fk_Pardavėjasid_Pardavėjas`),
+  ADD KEY `fk_kategorija` (`kategorija`);
 
 --
 -- Indexes for table `uzsakymai`
@@ -420,6 +433,12 @@ ALTER TABLE `apeliacijos`
   MODIFY `id_Apeliacija` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `kategorijos`
+--
+ALTER TABLE `kategorijos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `komentarai`
 --
 ALTER TABLE `komentarai`
@@ -429,7 +448,7 @@ ALTER TABLE `komentarai`
 -- AUTO_INCREMENT for table `naudotojai`
 --
 ALTER TABLE `naudotojai`
-  MODIFY `id_Naudotojas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_Naudotojas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `pardavejai`
@@ -453,7 +472,7 @@ ALTER TABLE `pranesimai`
 -- AUTO_INCREMENT for table `prekes`
 --
 ALTER TABLE `prekes`
-  MODIFY `id_Preke` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_Preke` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `uzsakymai`
@@ -524,7 +543,8 @@ ALTER TABLE `pranesimai`
 -- Constraints for table `prekes`
 --
 ALTER TABLE `prekes`
-  ADD CONSTRAINT `Parduoda` FOREIGN KEY (`fk_Pardavėjasid_Pardavėjas`) REFERENCES `pardavejai` (`id_Pardavejas`);
+  ADD CONSTRAINT `Parduoda` FOREIGN KEY (`fk_Pardavėjasid_Pardavėjas`) REFERENCES `pardavejai` (`id_Pardavejas`),
+  ADD CONSTRAINT `fk_kategorija` FOREIGN KEY (`kategorija`) REFERENCES `kategorijos` (`id`);
 
 --
 -- Constraints for table `uzsakymai`
