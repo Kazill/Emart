@@ -20,77 +20,119 @@ if (isset($_GET['id'])) {
         echo "No order found with ID: " . $Id;
         exit; // Stop further rendering if no user is found
     }
-
 } else {
     echo "No ID provided";
     exit; // Stop further rendering if no ID is provided
 }
+// Fetch the net like count (likes - dislikes) from the database
+$likeQuery = $conn->prepare("
+    SELECT SUM(CASE WHEN ivertis = 1 THEN 1 WHEN ivertis = -1 THEN -1 ELSE 0 END) as netLikes 
+    FROM vertinimai 
+    WHERE fk_Prekeid_Preke = ?");
+$likeQuery->bind_param("i", $Id);
+$likeQuery->execute();
+$likeResult = $likeQuery->get_result();
+$likeRow = $likeResult->fetch_assoc();
+$netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
+
+
 ?>
 <html>
-    <head>  
-        <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8"> 
-        <title>Prekė</title>
-        <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css" >
-    </head>
-    <script>
-		function confirmAction(remove, op) {
-			var r = confirm("Ar tikrai norite " + op + "!");
-			if (r === true) {
-				window.location.replace(remove);
-			}
-		}
-	</script>
-    <body>   
-        <table class="center"><tr><td><img src="/Emart/parduotuve/include/top.png"></td></tr><tr><td> 
-            <table style="border-width: 2px; border-style: dotted;"><tr><td>
-                Atgal į [<a href="/Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php">prekių sąrašą</a>]
-            </td></tr></table><br>
-            <div style="background-color: aqua; padding: 10px;">
-                <center><b>Prekė</b></center>
-                <p style="text-align:left;">Pavadinimas: <?php echo htmlspecialchars($orderData['pavadinimas']); ?></p>
-                <p style="text-align:left;">Kaina: <?php echo htmlspecialchars($orderData['kaina']); ?></p>
-                <p style="text-align:left;">Kategorija: <?php echo htmlspecialchars($orderData['kategorija']); ?></p>
-                <p style="text-align:left;">Gamintojas: <?php echo htmlspecialchars($orderData['gamintojas']); ?></p>
-                <p style="text-align:left;">Pardavėjas: <?php echo htmlspecialchars($orderData['Vardas']) . " " . htmlspecialchars($orderData['Pavarde']); ?></p>
-                <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">Įdėti į krepšelį</button>
-                <button onclick="window.location.href='/Emart/parduotuve/pridetipreke.php'">Redaguoti</button>
-                <button onclick=showConfirmDialog(null)>Pašalinti prekę</button>
-                <?php
-                    if($_SESSION['tipas']=='1')
-                    {
-                        if($orderData['ar_paslepta'] == 0){
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
+    <title>Prekė</title>
+    <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css">
+</head>
+<script>
+    function confirmAction(remove, op) {
+        var r = confirm("Ar tikrai norite " + op + "!");
+        if (r === true) {
+            window.location.replace(remove);
+        }
+    }
+</script>
+
+<body>
+    <table class="center">
+        <tr>
+            <td><img src="/Emart/parduotuve/include/top.png"></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-width: 2px; border-style: dotted;">
+                    <tr>
+                        <td>
+                            Atgal į [<a href="/Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php">prekių sąrašą</a>]
+                        </td>
+                    </tr>
+                </table><br>
+                <div style="background-color: aqua; padding: 10px;">
+                    <center><b>Prekė</b></center>
+                    <p style="text-align:left;">Pavadinimas: <?php echo htmlspecialchars($orderData['pavadinimas']); ?></p>
+                    <p style="text-align:left;">Kaina: <?php echo htmlspecialchars($orderData['kaina']); ?></p>
+                    <p style="text-align:left;">Kategorija: <?php echo htmlspecialchars($orderData['kategorija']); ?></p>
+                    <p style="text-align:left;">Gamintojas: <?php echo htmlspecialchars($orderData['gamintojas']); ?></p>
+                    <p style="text-align:left;">Pardavėjas: <?php echo htmlspecialchars($orderData['Vardas']) . " " . htmlspecialchars($orderData['Pavarde']); ?></p>
+                    <span id="likeCount"><?php echo $netLikeCount; ?></span> Likes
+                    <br>
+                    <br>
+                    <!-- Like button form -->
+                    <form action="ivertinimas.php" method="post">
+                        <input type="hidden" name="type" value="like">
+                        <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
+                        <input type="submit" value="Like">
+                    </form>
+
+                    <!-- Dislike button form -->
+                    <form action="ivertinimas.php" method="post">
+                        <input type="hidden" name="type" value="dislike">
+                        <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
+                        <input type="submit" value="Dislike">
+                    </form>
+                    <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">Įdėti į krepšelį</button>
+                    <button onclick="window.location.href='/Emart/parduotuve/pridetipreke.php'">Redaguoti</button>
+                    <button id="commentButton">Comment</button>
+                    <button onclick=showConfirmDialog(null)>Pašalinti prekę</button>
+                    <?php
+                    if ($_SESSION['tipas'] == '1') {
+                        if ($orderData['ar_paslepta'] == 0) {
                             echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/paslepti_preke.php?hide=1&id=$Id', 'Paslėpti');\">Paslėpti</button>\n";
-                        }
-                        else{
+                        } else {
                             echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/paslepti_preke.php?hide=0&id=$Id', 'Rodyti');\">Rodyti</button>\n";
                         }
                     }
-                ?>
-            </div>
-        </td></tr><tr><td>
-        
-        <center><b>Komentarai</b></center>
-        <?php
-        $sql = "SELECT * FROM prekes INNER JOIN komentarai ON fk_Prekeid_Preke = id_Preke LEFT JOIN pirkejai ON fk_Pirkejasid_Pirkejas=id_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke='{$Id}'"; // Replace 'users' with your actual table name
-        $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
+                    ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
-        if (mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-                echo "<div style='background-color: blue; border: solid; padding-bottom:10px; padding-left:10px; padding-right:10px'>";
-                echo "<p>". htmlspecialchars($row['Vardas']). " " . htmlspecialchars($row['Pavarde']) ." ". htmlspecialchars($row['data']). " " . htmlspecialchars($row['laikas']) . ":</p>";
-                echo "<p style='background-color: aqua; padding: 10px; border: dashed'><i>" . htmlspecialchars($row['tekstas']) . "</i></p>";
-                
-                if($_SESSION['tipas']=='1')
-                    {
-                        $kid=htmlspecialchars($row['id_Komentaras']);
-                        echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/trinti_komentara.php?pid=$Id&id=$kid', 'Trinti');\">Trinti</button>\n";
+                <center><b>Komentarai</b></center>
+                <?php
+                $sql = "SELECT * FROM prekes INNER JOIN komentarai ON fk_Prekeid_Preke = id_Preke LEFT JOIN pirkejai ON fk_Pirkejasid_Pirkejas=id_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke='{$Id}'"; // Replace 'users' with your actual table name
+                $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<div style='background-color: blue; border: solid; padding-bottom:10px; padding-left:10px; padding-right:10px'>";
+                        echo "<p>" . htmlspecialchars($row['Vardas']) . " " . htmlspecialchars($row['Pavarde']) . " " . htmlspecialchars($row['data']) . " " . htmlspecialchars($row['laikas']) . ":</p>";
+                        echo "<p style='background-color: aqua; padding: 10px; border: dashed'><i>" . htmlspecialchars($row['tekstas']) . "</i></p>";
+
+                        if ($_SESSION['tipas'] == '1') {
+                            $kid = htmlspecialchars($row['id_Komentaras']);
+                            echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/trinti_komentara.php?pid=$Id&id=$kid', 'Trinti');\">Trinti</button>\n";
+                        }
+                        echo "</div><br>";
                     }
-                echo "</div><br>";
-            }
-        } else {
-            echo "No comments found";
-        }
-        ?>
-        </td></tr></table>  
-    </body>
+                } else {
+                    echo "No comments found";
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
+</body>
+
 </html>
