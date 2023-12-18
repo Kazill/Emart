@@ -104,34 +104,110 @@ $netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
                     }
                     ?>
                 </div>
+                <!-- Popup Form (Initially Hidden) -->
+                <div id="commentFormPopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid black; z-index:100;">
+                    <h3>Leave a Comment</h3>
+                    <form action="komentaras.php" method="post">
+                        <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
+                        <textarea name="comment" required></textarea>
+                        <br>
+                        <input type="submit" value="Submit">
+                        <button type="button" onclick="closeCommentForm()">Cancel</button>
+                    </form>
+                </div>
+
+                <script>
+                    // JavaScript to handle the popup
+                    document.getElementById("commentButton").onclick = function() {
+                        document.getElementById("commentFormPopup").style.display = "block";
+                    };
+
+                    function closeCommentForm() {
+                        document.getElementById("commentFormPopup").style.display = "none";
+                    }
+                </script>
             </td>
         </tr>
         <tr>
             <td>
-
                 <center><b>Komentarai</b></center>
                 <?php
-                $sql = "SELECT * FROM prekes INNER JOIN komentarai ON fk_Prekeid_Preke = id_Preke LEFT JOIN pirkejai ON fk_Pirkejasid_Pirkejas=id_Pirkejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke='{$Id}'"; // Replace 'users' with your actual table name
-                $result = mysqli_query($conn, $sql); // Assuming $conn is your database connection variable
+                // Fetch top-level comments
+                $topLevelCommentsSql = "SELECT k.*, n.Vardas, n.Pavarde 
+                        FROM komentarai k
+                        JOIN pirkejai p ON k.fk_Pirkejasid_Pirkejas = p.id_Pirkejas
+                        JOIN naudotojai n ON p.fk_Naudotojasid_Naudotojas = n.id_Naudotojas
+                        WHERE k.fk_Prekeid_Preke = ? AND k.parent_id IS NULL";
+                if ($topLevelCommentsStmt = $conn->prepare($topLevelCommentsSql)) {
+                    $topLevelCommentsStmt->bind_param("i", $Id);
+                    $topLevelCommentsStmt->execute();
+                    $topLevelCommentsResult = $topLevelCommentsStmt->get_result();
 
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<div style='background-color: blue; border: solid; padding-bottom:10px; padding-left:10px; padding-right:10px'>";
-                        echo "<p>" . htmlspecialchars($row['Vardas']) . " " . htmlspecialchars($row['Pavarde']) . " " . htmlspecialchars($row['data']) . " " . htmlspecialchars($row['laikas']) . ":</p>";
-                        echo "<p style='background-color: aqua; padding: 10px; border: dashed'><i>" . htmlspecialchars($row['tekstas']) . "</i></p>";
+                    if ($topLevelCommentsResult->num_rows > 0) {
+                        while ($comment = $topLevelCommentsResult->fetch_assoc()) {
+                            echo "<div style='background-color: blue; border: solid; padding-bottom:10px; padding-left:10px; padding-right:10px'>";
+                            echo "<p>" . htmlspecialchars($comment['Vardas']) . " " . htmlspecialchars($comment['Pavarde']) . " " . htmlspecialchars($comment['data']) . " " . htmlspecialchars($comment['laikas']) . ":</p>";
+                            echo "<p style='background-color: aqua; padding: 10px; border: dashed'><i>" . htmlspecialchars($comment['tekstas']) . "</i></p>";
 
-                        if ($_SESSION['tipas'] == '1') {
-                            $kid = htmlspecialchars($row['id_Komentaras']);
-                            echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/trinti_komentara.php?pid=$Id&id=$kid', 'Trinti');\">Trinti</button>\n";
+                            // Fetch responses to this comment
+                            $responsesSql = "SELECT k.*, n.Vardas, n.Pavarde 
+                                             FROM komentarai k
+                                             JOIN pirkejai p ON k.fk_Pirkejasid_Pirkejas = p.id_Pirkejas
+                                             JOIN naudotojai n ON p.fk_Naudotojasid_Naudotojas = n.id_Naudotojas
+                                             WHERE k.parent_id = ?";
+                            if ($responsesStmt = $conn->prepare($responsesSql)) {
+                                $responsesStmt->bind_param("i", $comment['id_Komentaras']);
+                                $responsesStmt->execute();
+                                $responsesResult = $responsesStmt->get_result();
+
+                                while ($response = $responsesResult->fetch_assoc()) {
+                                    echo "<div style='background-color: lightblue; border: solid; padding-left:20px; margin-top:5px;'>";
+                                    echo "<p>" . htmlspecialchars($response['Vardas']) . " " . htmlspecialchars($response['Pavarde']) . " " . htmlspecialchars($response['data']) . " " . htmlspecialchars($response['laikas']) . " (Response):</p>";
+                                    echo "<p><i>" . htmlspecialchars($response['tekstas']) . "</i></p>";
+                                    echo "</div>";
+                                }
+                                $responsesStmt->close();
+                            }
+
+                            // Display the 'Respond' button for the top-level comment
+                            echo "<button onclick='respondToComment($Id, " . $comment['id_Komentaras'] . ")'>Respond</button>\n";
+
+                            if ($_SESSION['tipas'] == '1') {
+                                // Admin tools
+                                echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/trinti_komentara.php?pid=$Id&id=" . $comment['id_Komentaras'] . "', 'Trinti');\">Trinti</button>\n";
+                            }
+                            echo "</div><br>";
                         }
-                        echo "</div><br>";
+                    } else {
+                        echo "No comments found";
                     }
-                } else {
-                    echo "No comments found";
+                    $topLevelCommentsStmt->close();
                 }
                 ?>
+                <!-- Response form (hidden by default) -->
+                <div id="responseForm" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid black; z-index:100;">
+                    <h3>Respond to Comment</h3>
+                    <form action="atsakymas.php" method="post">
+                        <input type="hidden" name="product_id" id="product_id">
+                        <input type="hidden" name="comment_id" id="comment_id">
+                        <textarea name="response" required></textarea><br>
+                        <input type="submit" value="Submit Response">
+                        <button type="button" onclick="closeResponseForm()">Cancel</button>
+                    </form>
+                </div>
             </td>
         </tr>
+        <script>
+            function respondToComment(productId, commentId) {
+                document.getElementById('product_id').value = productId;
+                document.getElementById('comment_id').value = commentId;
+                document.getElementById('responseForm').style.display = 'block';
+            }
+
+            function closeResponseForm() {
+                document.getElementById('responseForm').style.display = 'none';
+            }
+        </script>
     </table>
 </body>
 

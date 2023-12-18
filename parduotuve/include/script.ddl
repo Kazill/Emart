@@ -116,15 +116,17 @@ CREATE TABLE pirkejai
 
 CREATE TABLE komentarai
 (
-	tekstas varchar (255) NOT NULL,
-	data date NOT NULL,
-	laikas varchar (255) NOT NULL,
-	id_Komentaras int NOT NULL AUTO_INCREMENT,
-	fk_Prekeid_Preke int NOT NULL,
-	fk_Pirkejasid_Pirkejas int NOT NULL,
-	PRIMARY KEY(id_Komentaras),
-	CONSTRAINT Gavo FOREIGN KEY(fk_Prekeid_Preke) REFERENCES prekes (id_Preke),
-	CONSTRAINT Paraso FOREIGN KEY(fk_Pirkejasid_Pirkejas) REFERENCES pirkejai (id_Pirkejas)
+    tekstas varchar (255) NOT NULL,
+    data date NOT NULL,
+    laikas varchar (255) NOT NULL,
+    id_Komentaras int NOT NULL AUTO_INCREMENT,
+    fk_Prekeid_Preke int NOT NULL,
+    fk_Pirkejasid_Pirkejas int NOT NULL,
+    parent_id int NULL, -- Add this column for referencing parent comments
+    PRIMARY KEY(id_Komentaras),
+    CONSTRAINT Gavo FOREIGN KEY(fk_Prekeid_Preke) REFERENCES prekes (id_Preke),
+    CONSTRAINT Paraso FOREIGN KEY(fk_Pirkejasid_Pirkejas) REFERENCES pirkejai (id_Pirkejas),
+    CONSTRAINT Atsakymas FOREIGN KEY(parent_id) REFERENCES komentarai (id_Komentaras) -- Add this foreign key constraint
 );
 
 CREATE TABLE uzsakymai

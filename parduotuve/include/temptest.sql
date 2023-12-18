@@ -548,6 +548,14 @@ ALTER TABLE `vertinimai`
   ADD CONSTRAINT `Turi` FOREIGN KEY (`fk_Prekeid_Preke`) REFERENCES `prekes` (`id_Preke`);
 COMMIT;
 
+-- Altering the 'komentarai' table to add the 'parent_id' column
+ALTER TABLE `komentarai`
+ADD `parent_id` INT(11) DEFAULT NULL;
+
+-- Adding a self-referencing foreign key constraint for 'parent_id'
+ALTER TABLE `komentarai`
+ADD CONSTRAINT `fk_komentarai_parent_id` FOREIGN KEY (`parent_id`) REFERENCES `komentarai` (`id_Komentaras`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

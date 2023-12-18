@@ -6,7 +6,7 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
-    die("You must be logged in to rate products.");
+    die("Reikia būti prisijungus norint vertinti prekes");
 }
 
 // Assign the session email to a variable
@@ -76,12 +76,12 @@ if (isset($_POST['type'], $_POST['product_id'])) {
                 $updateQuery->execute();
             }
         } else {
-            echo "No buyer profile found for user.";
+            echo "Šis vartotojas nėra pirkėjas";
             exit;
         }
     } else {
         // Handle the case where no user is found
-        echo "No user found with that email.";
+        echo "Vartotojas nerastas su duotu el. paštu";
         exit;
     }
 
