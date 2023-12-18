@@ -126,18 +126,20 @@ CREATE TABLE `komentarai` (
   `laikas` varchar(255) NOT NULL,
   `id_Komentaras` int(11) NOT NULL,
   `fk_Prekeid_Preke` int(11) NOT NULL,
-  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL
+  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `komentarai`
 --
-
-INSERT INTO `komentarai` (`tekstas`, `data`, `laikas`, `id_Komentaras`, `fk_Prekeid_Preke`, `fk_Pirkejasid_Pirkejas`) VALUES
-('komentaras', '2023-12-14', '16:00', 2, 3, 3),
-('gera preke', '0000-00-00', '15:25', 3, 6, 5),
-('gera preke', '2023-05-12', '15:25', 4, 6, 5);
-
+INSERT INTO `komentarai` (`tekstas`, `data`, `laikas`, `id_Komentaras`, `fk_Prekeid_Preke`, `fk_Pirkejasid_Pirkejas`, `parent_id`) VALUES
+('komentaras', '2023-12-14', '16:00', 2, 3, 3, NULL),
+('gera preke', '0000-00-00', '15:25', 3, 6, 5, NULL),
+('gera preke', '2023-05-12', '15:25', 4, 6, 5, NULL),
+('test', '2023-12-18', '19:35:11', 5, 5, 7, NULL),
+('Netyčia', '2023-12-18', '19:35:23', 6, 5, 7, 5),
+('Gera prekė', '2023-12-18', '19:39:36', 7, 7, 7, NULL);
 -- --------------------------------------------------------
 
 --
@@ -559,13 +561,7 @@ ALTER TABLE `vertinimai`
   ADD CONSTRAINT `Turi` FOREIGN KEY (`fk_Prekeid_Preke`) REFERENCES `prekes` (`id_Preke`);
 COMMIT;
 
--- Altering the 'komentarai' table to add the 'parent_id' column
-ALTER TABLE `komentarai`
-ADD `parent_id` INT(11) DEFAULT NULL;
 
--- Adding a self-referencing foreign key constraint for 'parent_id'
-ALTER TABLE `komentarai`
-ADD CONSTRAINT `fk_komentarai_parent_id` FOREIGN KEY (`parent_id`) REFERENCES `komentarai` (`id_Komentaras`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
