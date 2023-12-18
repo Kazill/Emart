@@ -20,7 +20,7 @@ $_SESSION['prev'] = "zinutes";
 
 <body>
     <?php
-    $siuntejas = $_SESSION['userId'];
+    $siuntejas = $_SESSION['otherId'];
     $gavejas = $_GET['email'];
 
     if ($_POST != null) {
