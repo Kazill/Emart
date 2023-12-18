@@ -2,16 +2,28 @@
 session_start();
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 
-// Fetch user details from session or a database query
-// Assuming $itemData is an array holding user information
-$itemData = array(
-    'Pavadinimas' => 'Laidas',
-    'Pardavejas' => 'Petras',
-    'Kaina' => '10.20',
-    'Kiekis' => 150,
-    'Gamintojas' => 'Gamintojas' // 'Taip' or 'Ne'
-);
+if (isset($_GET['id'])) {
+    $Id = intval($_GET['id']); // Sanitize the input
+
+    // Prepare a SQL query to fetch the user's data
+    $query = $conn->prepare("SELECT * FROM prekes INNER JOIN pardavejai ON fk_Pardavėjasid_Pardavėjas=id_Pardavejas INNER JOIN naudotojai ON fk_Naudotojasid_Naudotojas=id_Naudotojas WHERE id_Preke = ?");
+    $query->bind_param("i", $Id);
+    $query->execute();
+    $result = $query->get_result();
+
+    if ($result->num_rows > 0) {
+        $orderData = $result->fetch_assoc();
+    } else {
+        echo "No order found with ID: " . $Id;
+        exit; // Stop further rendering if no user is found
+    }
+
+} else {
+    echo "No ID provided";
+    exit; // Stop further rendering if no ID is provided
+}
 ?>
 <html>
 <head>  
@@ -28,19 +40,20 @@ $itemData = array(
             </table>
             <br>
             <div align="center" style="background-color: aqua; padding: 10px;">
-                <form action="/Emart/parduotuve/prekiu_posisteme/preke1.php" method="post">
+                <form action="/Emart/parduotuve/redaguotiprekea.php" method="post">
                     <center style="font-size:18pt;"><b>Redaguoti prekę</b></center>
                     <p style="text-align:left;">Pavadinimas:<br>
-                        <input type="text" name="Pavadinimas" value="<?php echo htmlspecialchars($itemData['Pavadinimas']); ?>" /></p>
+                        <input type="text" name="Pavadinimas" value="<?php echo htmlspecialchars($orderData['pavadinimas']); ?>" /></p>
                     <p style="text-align:left;">Pardavėjas:<br>
-                        <input type="text" name="Pardavejas" value="<?php echo htmlspecialchars($itemData['Pardavejas']); ?>" /></p>
+                        <input type="text" name="Pardavejas" value="<?php echo htmlspecialchars($orderData['Vardas']); ?>" /></p>
                     <p style="text-align:left;">Kaina:<br>
-                        <input type="text" name="Kaina" value="<?php echo htmlspecialchars($itemData['Kaina']); ?>" /></p>
+                        <input type="text" name="Kaina" value="<?php echo htmlspecialchars($orderData['kaina']); ?>" /></p>
                     <p style="text-align:left;">Kiekis:<br>
-                        <input type="text" name="Kiekis" value="<?php echo htmlspecialchars($itemData['Kiekis']); ?>" /></p>
+                        <input type="text" name="Kiekis" value="Nežinomas" /></p>
                     <p style="text-align:left;">Gamintojas:<br>
-                        <input type="text" name="Gamintojas" value="<?php echo htmlspecialchars($itemData['Gamintojas']); ?>" /></p>
+                        <input type="text" name="Gamintojas" value="<?php echo htmlspecialchars($orderData['gamintojas']); ?>" /></p>
                     <p style="text-align:center;">
+                    <input type="hidden" name="id_Preke" value="<?php echo $Id; ?>" />
                         <button type="submit">Išsaugoti Pakeitimus</button>
                     </p>
                 </form>

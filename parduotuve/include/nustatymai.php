@@ -1,14 +1,17 @@
 <?php
 //nustatymai.php
+
 define("DB_SERVER", "158.129.26.35");
 define("DB_USER", "root");
 define("DB_PASS", "313kambarys313");
 define("DB_NAME", "isp"); 
 
-//define("DB_SERVER", "localhost");
-//define("DB_USER", "stud");
-//define("DB_PASS", "stud");
-//define("DB_NAME", "isp");
+/*
+define("DB_SERVER", "localhost");
+define("DB_USER", "stud");
+define("DB_PASS", "stud");
+define("DB_NAME", "isp");
+*/
 
 define("TBL_USERS", "Naudotojas");
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės

@@ -53,7 +53,7 @@ if (isset($_GET['id'])) {
                 <p style="text-align:left;">Gamintojas: <?php echo htmlspecialchars($orderData['gamintojas']); ?></p>
                 <p style="text-align:left;">Pardavėjas: <?php echo htmlspecialchars($orderData['Vardas']) . " " . htmlspecialchars($orderData['Pavarde']); ?></p>
                 <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">Įdėti į krepšelį</button>
-                <button onclick="window.location.href='/Emart/parduotuve/pridetipreke.php'">Redaguoti</button>
+                <button onclick="window.location.href='/Emart/parduotuve/prekiu_posisteme/redaguoti_preke.php?id=<?php echo $Id; ?>'">Redaguoti</button>
                 <button onclick=showConfirmDialog(null)>Pašalinti prekę</button>
                 <?php
                     if($_SESSION['tipas']=='1')

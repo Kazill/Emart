@@ -1,27 +1,31 @@
 <?php
-include("include/nustatymai.php");
+session_start();
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 
-$server=DB_SERVER;
-$user=DB_USER;
-$password=DB_PASS;
-$dbname=DB_NAME;
-$lentele="Preke";
+$host = 'localhost';    // Hostname of your database server
+$user = 'root';    // Username for database access
+$pass = '';    // Password for database access
+$db   = 'isp';    // Name of your database
+$lentele="prekes";
 
-$conn = new mysqli($server, $user, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $db);
    if ($conn->connect_error) die("Negaliu prisijungti: " . $conn->connect_error);
 mysqli_set_charset($conn,"utf8");// dėl lietuviškų raidžių
 
 if($_POST !=null){
-	$id = $_POST['id'];
-	$pavadinimas = $_POST['pavadinimas'];
-	$kaina = $_POST['kaina'];
-	$kategorija = $_POST['kategorija'];
-	$kiekis = $_POST['kiekis'];
-	$garantija = $_POST['garantija'];
-	$pristatymasgeriausiuatveju = $_POST['pristatymasgeriausiuatveju'];
-	$pristatymasblogiausiuatveju = $_POST['pristatymasblogiausiuatveju'];
-	$gamintojas = $_POST['gamintojas'];
+	$pavadinimas = $_POST['Pavadinimas'];
+	$kaina = $_POST['Kaina'];
+	$id = $_POST['id_Preke'];
+	//$kategorija = $_POST['kategorija'];
+	//$kiekis = $_POST['kiekis'];
+	//$garantija = $_POST['garantija'];
+	//$pristatymasgeriausiuatveju = $_POST['pristatymasgeriausiuatveju'];
+	//$pristatymasblogiausiuatveju = $_POST['pristatymasblogiausiuatveju'];
+	$gamintojas = $_POST['Gamintojas'];
 
+	/*
 	$sql = "  UPDATE `$lentele`
 					SET    `id`='{$id}',
 					`pavadinimas`='{$pavadinimas}',
@@ -33,9 +37,17 @@ if($_POST !=null){
 					`pristatymasblogiausiuatveju`='{$pristatymasblogiausiuatveju}',
 					`gamintojas`='{$gamintojas}'
 					WHERE `id`='{$id}'";
+	*/
+	
+	$sql = "  UPDATE `$lentele`
+					SET
+					`pavadinimas`='{$pavadinimas}',
+					`kaina`='{$kaina}',
+					`gamintojas`='{$gamintojas}'
+					WHERE `id_Preke`='{$id}'";
 
     if (!$result = $conn->query($sql)) die("Negaliu atnaujinti: " . $conn->error);
-	{header("Location:prekiuposisteme.php");exit;} 
+	else {header("Location: /Emart/parduotuve/prekiu_posisteme/preke.php?id=$id");} 
 }
 
 
