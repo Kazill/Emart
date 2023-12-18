@@ -57,8 +57,7 @@ CREATE TABLE `administratoriai` (
 --
 
 INSERT INTO `administratoriai` (`idarbinimo_data`, `Tel_nr`, `Alga`, `id_Administratorius`, `fk_Naudotojasid_Naudotojas`) VALUES
-('2023-12-13', '48448464546', 2000, 3, 9),
-('2023-12-12', '516515', 2000, 4, 12);
+('2023-12-18', '862154637', 0, 5, 16);
 
 -- --------------------------------------------------------
 
@@ -87,8 +86,13 @@ INSERT INTO `adresai` (`Miestas`, `Salis`, `Pasto_kodas`, `Gatve`, `Namo_nr`, `i
 ('Londonas', 'DB', '5646', 'maj', 5, 5, 12),
 ('Maskva', 'Rusija', '5646', 'Lokulu', 5, 6, 13),
 ('Vilnius', 'Lietuva', '5646', 'Lokulu', 5, 7, 14),
-('Kaunas', 'Lietuva', '5646', 'Lokulu', 5, 8, 15);
-
+('Kaunas', 'Lietuva', '5646', 'Lokulu', 5, 8, 15),
+('Kaunas', 'Lietuva', '70317', 'Aguonų g.', 6, 9, 16),
+('Vilnius', 'Lietuva', '35538', 'Aido g.', 8, 10, 17),
+('Marijampolė', 'Lietuva', '53535', 'Akmenės g.', 1, 11, 18),
+('Klaipėda', 'Vokietija', '75757', 'Alyvų g.', 15, 12, 19),
+('Vilnius', 'Lietuva', '58337', 'Alyvų g.', 20, 13, 20),
+('test', 'test', '2422', 'test', 1, 14, 21);
 -- --------------------------------------------------------
 
 --
@@ -122,7 +126,7 @@ CREATE TABLE `komentarai` (
   `laikas` varchar(255) NOT NULL,
   `id_Komentaras` int(11) NOT NULL,
   `fk_Prekeid_Preke` int(11) NOT NULL,
-  `fk_Pirkejasid_Pirkejas` int(11) NULL
+  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -156,13 +160,18 @@ CREATE TABLE `naudotojai` (
 
 INSERT INTO `naudotojai` (`Vardas`, `Pavarde`, `El_pastas`, `Slaptazodis`, `Ar_blokuotas`, `Naudotojo_lygis`, `id_Naudotojas`) VALUES
 ('aaaaaaaaaa', 'aaaaaaaaa', 'nrr@gmail.com', '$2y$10$ndwijoHfAr1smsjaPakrned8yan2nhWpL9A4uYbpwc8y2Dj7AwM.a', 1, 3, 8),
-('admin', 'aaaaaaaaa', 'f@gmail.com', '$2y$10$fBpLtSYKuYCFCss1B1kyFeHip4rXzqtnxGlmgsOToz.z8h7.hKwUC', 0, 1, 9),
+('admin', 'aaaaaaaaa', 'f@gmail.com', '$2y$10$fBpLtSYKuYCFCss1B1kyFeHip4rXzqtnxGlmgsOToz.z8h7.hKwUC', 0, 0, 9),
 ('naudotojas', 'n', 'naud@gmail.com', '$2y$10$O1RYOmRKzUXZuWwwCJhzwOmfoAj/9lvCBuHP/v.AjmYbxJY2lrh6q', 0, 3, 11),
-('administratorius', 'aa', 'ad@gmail.com', '$2y$10$03DXa4Btk7EeBPSlg99n8eoOYwg12vp/A53XD0Y1DFrDQji.Ytrka', 0, 1, 12),
+('administratorius', 'aa', 'rasdsadas@gmail.com', '$2y$10$03DXa4Btk7EeBPSlg99n8eoOYwg12vp/A53XD0Y1DFrDQji.Ytrka', 0, 0, 12),
 ('pardavejas', 'par', 'pr@gmail.com', '$2y$10$SnQ2qUvI3Rc92IPrEi3jduHx3U3tqodTj67MXuf7lzqSKk8PuJtKO', 0, 2, 13),
 ('nejus', 'netiejus', 'netej@gmail.com', '$2y$10$reyetV3DBABV5aI66DD5nu6mYodHWzO6fA7o8Cilm1R4lIa2uo1va', 0, 3, 14),
-('pranas', 'pedantas', 'pr@gmail.com', '$2y$10$2jWII2qXlx9saHuFduNRJuSQ.5dux.UIAMn02ucF.zOmEtra7Tg6q', 0, 2, 15);
-
+('pranas', 'pedantas', 'pr@gmail.com', '$2y$10$2jWII2qXlx9saHuFduNRJuSQ.5dux.UIAMn02ucF.zOmEtra7Tg6q', 0, 2, 15),
+('owner', 'renwo', 'parduotuve.email@gmail.com', '$2y$10$bS7O5FuADJBa5kFPHHY6OuWjOjdx3JRHOaAZLLynajN8dSPkfgpIG', 0, 1, 16),
+('matas', 'satam', 'test@gmail.com', '$2y$10$wCIxx.2Vk4kce/P/p/mUoegwbXG/tFYqQnXRfgluiAZf7FiU8jY.m', 0, 2, 17),
+('tadas', 'sadat', 'paprastas@gmail.com', '$2y$10$ndGKZXD1.93gICKHnJVJxuUKSiDUwgL2w1El4x2AEIbWpIMnRjoGW', 0, 3, 18),
+('ignas', 'sangi', 'Negalima@gmail.com', '$2y$10$rAr0F96OOhZMRVcNATOUr.KKsyRwDJNgnmPJcYdKYE9034uIC/HZG', 0, 2, 19),
+('petras', 'sartep', 'Galimas@gmail.com', '$2y$10$a4FogKvZopjR60NuSQWDHOk8kU2sAj5LWLYhv982W7.cO70QrbhhO', 0, 3, 20),
+('test', 'test', 'testas@gmail.com', '$2y$10$WShkE8kudjuxOOHnE/jmweHUu5uD7FwKmPQINR6CZatERpCCHY3g.', 0, 0, 21);
 -- --------------------------------------------------------
 
 --
@@ -184,8 +193,9 @@ CREATE TABLE `pardavejai` (
 
 INSERT INTO `pardavejai` (`Ar_patvirtintas`, `patvirtinimo_data`, `Ikeltu_prekiu_skaicius`, `vertinimu_vidurkis`, `id_Pardavejas`, `fk_Naudotojasid_Naudotojas`) VALUES
 (0, NULL, 0, NULL, 4, 15),
-(1, '2023-12-12', 5, 3, 5, 13);
-
+(1, '2023-12-12', 5, 3, 5, 13),
+(0, NULL, 0, NULL, 6, 17),
+(0, NULL, 0, NULL, 7, 19);
 -- --------------------------------------------------------
 
 --
@@ -207,8 +217,9 @@ CREATE TABLE `pirkejai` (
 INSERT INTO `pirkejai` (`vertinimu_vidurkis`, `uzsakymu_skaicius`, `komentaru_skaicius`, `id_Pirkejas`, `fk_Naudotojasid_Naudotojas`) VALUES
 (NULL, 2, 2, 3, 8),
 (NULL, 0, 0, 4, 11),
-(NULL, 1, 5, 5, 14);
-
+(NULL, 1, 5, 5, 14),
+(NULL, 0, 0, 6, 18),
+(NULL, 0, 0, 7, 20);
 -- --------------------------------------------------------
 
 --
@@ -500,7 +511,7 @@ ALTER TABLE `apeliacijos`
 --
 ALTER TABLE `komentarai`
   ADD CONSTRAINT `Gavo` FOREIGN KEY (`fk_Prekeid_Preke`) REFERENCES `prekes` (`id_Preke`),
-  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `pardavejai`

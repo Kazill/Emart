@@ -81,18 +81,18 @@ $netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
                     <form action="ivertinimas.php" method="post">
                         <input type="hidden" name="type" value="like">
                         <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
-                        <input type="submit" value="Like">
+                        <input type="submit" value="Patiko">
                     </form>
 
                     <!-- Dislike button form -->
                     <form action="ivertinimas.php" method="post">
                         <input type="hidden" name="type" value="dislike">
                         <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
-                        <input type="submit" value="Dislike">
+                        <input type="submit" value="Nepatiko">
                     </form>
                     <button onclick="window.location.href='/Emart/parduotuve/krepselis.php'">Įdėti į krepšelį</button>
                     <button onclick="window.location.href='/Emart/parduotuve/pridetipreke.php'">Redaguoti</button>
-                    <button id="commentButton">Comment</button>
+                    <button id="commentButton">Komentuoti</button>
                     <button onclick=showConfirmDialog(null)>Pašalinti prekę</button>
                     <?php
                     if ($_SESSION['tipas'] == '1') {
@@ -106,13 +106,13 @@ $netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
                 </div>
                 <!-- Popup Form (Initially Hidden) -->
                 <div id="commentFormPopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid black; z-index:100;">
-                    <h3>Leave a Comment</h3>
+                    <h3>Palikite komentarą</h3>
                     <form action="komentaras.php" method="post">
                         <input type="hidden" name="product_id" value="<?php echo $Id; ?>">
                         <textarea name="comment" required></textarea>
                         <br>
-                        <input type="submit" value="Submit">
-                        <button type="button" onclick="closeCommentForm()">Cancel</button>
+                        <input type="submit" value="Pateikti">
+                        <button type="button" onclick="closeCommentForm()">Atšaukti</button>
                     </form>
                 </div>
 
@@ -170,7 +170,7 @@ $netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
                             }
 
                             // Display the 'Respond' button for the top-level comment
-                            echo "<button onclick='respondToComment($Id, " . $comment['id_Komentaras'] . ")'>Respond</button>\n";
+                            echo "<button onclick='respondToComment($Id, " . $comment['id_Komentaras'] . ")'>Atsakyti</button>\n";
 
                             if ($_SESSION['tipas'] == '1') {
                                 // Admin tools
@@ -186,7 +186,7 @@ $netLikeCount = isset($likeRow['netLikes']) ? $likeRow['netLikes'] : 0;
                 ?>
                 <!-- Response form (hidden by default) -->
                 <div id="responseForm" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid black; z-index:100;">
-                    <h3>Respond to Comment</h3>
+                    <h3>Atsakyti į komentarą</h3>
                     <form action="atsakymas.php" method="post">
                         <input type="hidden" name="product_id" id="product_id">
                         <input type="hidden" name="comment_id" id="comment_id">
