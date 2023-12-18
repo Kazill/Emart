@@ -15,35 +15,55 @@ include("include/db_connect.php");
 
 $_SESSION['prev'] = "procregister";
 
-// Retrieve and sanitize form inputs
 $vardas = mysqli_real_escape_string($conn, strtolower(trim($_POST['vardas'])));
 $pavarde = mysqli_real_escape_string($conn, strtolower(trim($_POST['pavarde'])));
 $el_pastas = mysqli_real_escape_string($conn, trim($_POST['email']));
-$slaptazodis = password_hash($_POST['pass'], PASSWORD_DEFAULT); // Hash the password
-$ar_blokuotas = 0; // Assuming the user is not blocked by default
-$naudotojo_lygis = 0; // Assuming '0' is the default user level
-
-// Validation of form fields
+$slaptazodis = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+$ar_blokuotas = 0;
+$naudotojo_lygis = mysqli_real_escape_string($conn, trim($_POST['role']));
+$tel = ($naudotojo_lygis == "1") ? mysqli_real_escape_string($conn, $_POST['tel']) : null;
+$naudotojo_lygis = ($naudotojo_lygis == "1") ? 0 : $naudotojo_lygis;
 if (checkname($vardas) && checkPasswordStrength($_POST['pass']) && checkmail($el_pastas)) {
-    // Prepare the SQL statement
     $stmt = $conn->prepare("INSERT INTO naudotojai (Vardas, Pavarde, El_pastas, Slaptazodis, Ar_blokuotas, Naudotojo_lygis) VALUES (?, ?, ?, ?, ?, ?)");
-
-    // Bind parameters to the SQL statement
     $stmt->bind_param("ssssii", $vardas, $pavarde, $el_pastas, $slaptazodis, $ar_blokuotas, $naudotojo_lygis);
 
-    // Execute the statement
     if ($stmt->execute()) {
-        $_SESSION['message'] = "Registracija sėkminga";
-        $stmt->close();
-        header("Location: index.php"); // Redirect to the index or another appropriate page
-        exit;
+        $userId = $stmt->insert_id;
+        $stmtRole = null;
+
+        switch ($naudotojo_lygis) {
+            case "1": // Administratorius
+                $stmtRole = $conn->prepare("INSERT INTO administratoriai (idarbinimo_data, Tel_nr, fk_Naudotojasid_Naudotojas) VALUES (CURDATE(), ?, ?)");
+                $stmtRole->bind_param("si", $tel, $userId);
+                break;
+            case "2": // Darbuotojas (Assuming 'pardavejai' table)
+                $stmtRole = $conn->prepare("INSERT INTO pardavejai (Ar_patvirtintas, patvirtinimo_data, Ikeltu_prekiu_skaicius, vertinimu_vidurkis, fk_Naudotojasid_Naudotojas) VALUES (0, NULL, 0, NULL, ?)");
+                $stmtRole->bind_param("i", $userId);
+                break;
+            case "3": // Klientas (Assuming 'pirkejai' table)
+                $stmtRole = $conn->prepare("INSERT INTO pirkejai (vertinimu_vidurkis, uzsakymu_skaicius, komentaru_skaicius, fk_Naudotojasid_Naudotojas) VALUES (NULL, 0, 0, ?)");
+                $stmtRole->bind_param("i", $userId);
+                break;
+            // Add more cases for other roles
+        }
+        
+
+        if ($stmtRole && !$stmtRole->execute()) {
+            $_SESSION['message'] = "Role-specific registration error: " . $stmtRole->error;
+            $stmtRole->close();
+            header("Location: register.php");
+        } else {
+            $_SESSION['message'] = "Registracija sėkminga";
+            header("Location: index.php");
+        }
     } else {
         $_SESSION['message'] = "Registracijos klaida: " . $stmt->error;
-        $stmt->close();
+        header("Location: register.php");
     }
+    $stmt->close();
 } else {
-    // If validation fails, redirect back to the registration form
+    $_SESSION['message'] = "Formos validacijos klaida";
     header("Location: register.php");
-    exit;
 }
+exit;
 ?>

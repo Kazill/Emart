@@ -19,6 +19,7 @@ function inisession($arg) {   //valom sesijos kintamuosius
 		$_SESSION['mail_login']="";
 		$_SESSION['data_login']="";
 		$_SESSION['tel_login']="";
+		$_SESSION['role_login']="";
 	
 		$_SESSION['name_error']="";
 		$_SESSION['pavarde_error']="";
@@ -26,6 +27,7 @@ function inisession($arg) {   //valom sesijos kintamuosius
 		$_SESSION['mail_error']=""; 
 		$_SESSION['data_error']="";
 		$_SESSION['tel_error']="";
+		$_SESSION['role_error']="";
         }
 
 function checkname ($username){   // Vartotojo vardo sintakse
