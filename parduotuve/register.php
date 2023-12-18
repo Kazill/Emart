@@ -48,7 +48,14 @@ $_SESSION['prev'] = "register";
 							<td>
 								<form action="procregister.php" method="POST" class="login">
 									<center style="font-size:18pt;"><b>Registracija</b></center>
-
+									<br>
+									<select class="s1" name="role" id="roleSelect" onchange="checkRole()">
+										<?php foreach ($user_roles as $roleName => $roleValue) : ?>
+											<option value="<?php echo htmlspecialchars($roleValue); ?>" <?php echo (isset($_SESSION['role_login']) && $_SESSION['role_login'] == $roleValue) ? 'selected' : ''; ?>>
+												<?php echo htmlspecialchars($roleName); ?>
+											</option>
+										<?php endforeach; ?>
+									</select><br>
 									<p style="text-align:left;">Vardas:<br>
 										<input class="s1" name="vardas" type="text" value="<?php echo $_SESSION['name_login'];  ?>"><br>
 										<?php echo $_SESSION['name_error']; ?>
@@ -62,7 +69,7 @@ $_SESSION['prev'] = "register";
 										<?php echo $_SESSION['data_error']; ?>
 									</p>
 									<p style="text-align:left;">Tel. Nr.:<br>
-									<input class="s1" name="tel" type="text" id="phoneInput" value="<?php echo $_SESSION['tel_login'];  ?>"><br>
+										<input class="s1" name="tel" type="text" id="phoneInput" value="<?php echo $_SESSION['tel_login'];  ?>"><br>
 										<?php echo $_SESSION['tel_error']; ?>
 									</p>
 									<p style="text-align:left;">Slaptažodis:<br>
@@ -73,14 +80,26 @@ $_SESSION['prev'] = "register";
 										<input class="s1" name="email" type="text" value="<?php echo $_SESSION['mail_login']; ?>"><br>
 										<?php echo $_SESSION['mail_error']; ?>
 									</p>
-									<select class="s1" name="role" id="roleSelect" onchange="checkRole()">
-										<?php foreach ($user_roles as $roleName => $roleValue) : ?>
-											<option value="<?php echo htmlspecialchars($roleValue); ?>" <?php echo (isset($_SESSION['role_login']) && $_SESSION['role_login'] == $roleValue) ? 'selected' : ''; ?>>
-												<?php echo htmlspecialchars($roleName); ?>
-											</option>
-										<?php endforeach; ?>
-									</select><br>
-
+									<p style="text-align:left;">Miestas:<br>
+										<input class="s1" name="miestas" type="text" value="<?php echo $_SESSION['miestas_login']; ?>"><br>
+										<?php echo $_SESSION['miestas_error']; ?>
+									</p>
+									<p style="text-align:left;">Šalis:<br>
+										<input class="s1" name="salis" type="text" value="<?php echo $_SESSION['salis_login']; ?>"><br>
+										<?php echo $_SESSION['salis_error']; ?>
+									</p>
+									<p style="text-align:left;">Pašto kodas:<br>
+										<input class="s1" name="pasto_kodas" type="text" value="<?php echo $_SESSION['pasto_kodas_login']; ?>"><br>
+										<?php echo $_SESSION['pasto_kodas_error']; ?>
+									</p>
+									<p style="text-align:left;">Gatvė:<br>
+										<input class="s1" name="gatve" type="text" value="<?php echo $_SESSION['gatve_login']; ?>"><br>
+										<?php echo $_SESSION['gatve_error']; ?>
+									</p>
+									<p style="text-align:left;">Namo numeris:<br>
+										<input class="s1" name="namo_nr" type="text" value="<?php echo $_SESSION['namo_nr_login']; ?>"><br>
+										<?php echo $_SESSION['namo_nr_error']; ?>
+									</p>
 
 									<?php
 									if ($_SESSION['tipas'] == $user_roles[ADMIN_LEVEL]) {
@@ -110,19 +129,19 @@ $_SESSION['prev'] = "register";
 
 </html>
 <script>
-function checkRole() {
-    var selectedRole = document.getElementById('roleSelect').value;
-    var phoneInput = document.getElementById('phoneInput');
-    
-    // "1" should be replaced with the value representing "Administratorius" in your $user_roles array
-    if (selectedRole === "1") {
-        phoneInput.disabled = false;
-    } else {
-        phoneInput.disabled = true;
-        phoneInput.value = ''; // Optionally clear the value
-    }
-}
+	function checkRole() {
+		var selectedRole = document.getElementById('roleSelect').value;
+		var phoneInput = document.getElementById('phoneInput');
 
-// Run on page load to set the initial state
-window.onload = checkRole;
+		// "1" should be replaced with the value representing "Administratorius" in your $user_roles array
+		if (selectedRole === "1") {
+			phoneInput.disabled = false;
+		} else {
+			phoneInput.disabled = true;
+			phoneInput.value = ''; // Optionally clear the value
+		}
+	}
+
+	// Run on page load to set the initial state
+	window.onload = checkRole;
 </script>

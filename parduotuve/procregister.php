@@ -22,8 +22,15 @@ $slaptazodis = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 $ar_blokuotas = 0;
 $naudotojo_lygis = mysqli_real_escape_string($conn, trim($_POST['role']));
 $tel = ($naudotojo_lygis == "1") ? mysqli_real_escape_string($conn, $_POST['tel']) : null;
-$naudotojo_lygis = ($naudotojo_lygis == "1") ? 0 : $naudotojo_lygis;
-if (checkname($vardas) && checkPasswordStrength($_POST['pass']) && checkmail($el_pastas)) {
+$userLevel = ($naudotojo_lygis == "1") ? 0 : $naudotojo_lygis;
+
+// Address fields
+$miestas = mysqli_real_escape_string($conn, $_POST['miestas']);
+$salis = mysqli_real_escape_string($conn, $_POST['salis']);
+$pasto_kodas = mysqli_real_escape_string($conn, $_POST['pasto_kodas']);
+$gatve = mysqli_real_escape_string($conn, $_POST['gatve']);
+$namo_nr = mysqli_real_escape_string($conn, $_POST['namo_nr']);
+if (checkname($vardas) && checkPasswordStrength($_POST['pass']) && checkmail($el_pastas) && checkAddressFields($miestas, $salis, $pasto_kodas, $gatve, $namo_nr)) {
     $stmt = $conn->prepare("INSERT INTO naudotojai (Vardas, Pavarde, El_pastas, Slaptazodis, Ar_blokuotas, Naudotojo_lygis) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssii", $vardas, $pavarde, $el_pastas, $slaptazodis, $ar_blokuotas, $naudotojo_lygis);
 
@@ -44,26 +51,37 @@ if (checkname($vardas) && checkPasswordStrength($_POST['pass']) && checkmail($el
                 $stmtRole = $conn->prepare("INSERT INTO pirkejai (vertinimu_vidurkis, uzsakymu_skaicius, komentaru_skaicius, fk_Naudotojasid_Naudotojas) VALUES (NULL, 0, 0, ?)");
                 $stmtRole->bind_param("i", $userId);
                 break;
-            // Add more cases for other roles
         }
-        
 
-        if ($stmtRole && !$stmtRole->execute()) {
-            $_SESSION['message'] = "Role-specific registration error: " . $stmtRole->error;
+        $executeRole = true;
+        if ($stmtRole) {
+            $executeRole = $stmtRole->execute();
             $stmtRole->close();
-            header("Location: register.php");
-        } else {
+        }
+
+        $stmtAddr = $conn->prepare("INSERT INTO adresai (Miestas, Salis, Pasto_kodas, Gatve, Namo_nr, fk_Naudotojasid_Naudotojas) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtAddr->bind_param("ssssii", $miestas, $salis, $pasto_kodas, $gatve, $namo_nr, $userId);
+        $executeAddr = $stmtAddr->execute();
+        $stmtAddr->close();
+
+        if ($executeRole && $executeAddr) {
             $_SESSION['message'] = "Registracija sėkminga";
             header("Location: index.php");
+            exit;
+        } else {
+            $_SESSION['message'] = "Role-specific or Address registration error";
+            header("Location: register.php");
+            exit;
         }
     } else {
         $_SESSION['message'] = "Registracijos klaida: " . $stmt->error;
         header("Location: register.php");
+        exit;
     }
-    $stmt->close();
 } else {
     $_SESSION['message'] = "Formos validacijos klaida";
     header("Location: register.php");
+    exit;
 }
-exit;
+
 ?>
