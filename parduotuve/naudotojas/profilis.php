@@ -73,7 +73,6 @@ $userEmail = htmlspecialchars($userData['El_pastas']);
                     <p style="text-align:left;">El. paštas: <?php echo htmlspecialchars($userData['El_pastas']); ?></p>
                     <p style="text-align:left;">Slaptažodis: <?php echo htmlspecialchars($userData['Slaptazodis']); ?></p>
                     <p style="text-align:left;">Ar blokuotas: <?php echo htmlspecialchars($userData['Ar_blokuotas']); ?></p>
-                    <button onclick="window.location.href='/Emart/parduotuve/naudotojas/redaguoti.php?id=<?php echo $userId; ?>'">Redaguoti</button>
                     <?php
                     // Prepare the SQL statement to prevent SQL injection
                     $stmt = $conn->prepare("SELECT id_Naudotojas FROM naudotojai WHERE El_pastas = ?");
@@ -95,6 +94,7 @@ $userEmail = htmlspecialchars($userData['El_pastas']);
                         }
                     }
                     if ($_SESSION['tipas'] == '1') {
+                        echo "<button onclick=\"window.location.href='/Emart/parduotuve/naudotojas/redaguoti.php?id=$userId'\">Redaguoti</button>\n";
                         echo "<button onclick=\"window.location.href='/Emart/parduotuve/admin/pranesimas.php?email=$userEmail'\">Pranešimas</button>\n";
                         if ($userData['Ar_blokuotas'] == 0) {
                             echo "<button onclick=\"confirmAction('/Emart/parduotuve/admin/blokuoti.php?block=1&id=$userId', 'Blokuoti');\">Blokuoti</button>\n";

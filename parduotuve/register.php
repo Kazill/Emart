@@ -20,6 +20,11 @@ include_once("include/functions.php");
 if ($_SESSION['prev'] != "procregister")  inisession("part");  // pradinis bandymas registruoti
 
 $_SESSION['prev'] = "register";
+
+if (!empty($_SESSION['message'])) {
+    echo "<div id='messageDisplay'><font size='4' color='#ff0000'>" . htmlspecialchars($_SESSION['message']) . "</font></div>";
+    $_SESSION['message'] = ''; // Clear the message after displaying
+}
 ?>
 <html>
 
@@ -46,6 +51,7 @@ $_SESSION['prev'] = "register";
 					<table>
 						<tr>
 							<td>
+								<div id="messageDisplay"></div>
 								<form action="procregister.php" method="POST" class="login">
 									<center style="font-size:18pt;"><b>Registracija</b></center>
 									<br>

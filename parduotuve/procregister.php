@@ -30,7 +30,7 @@ $salis = mysqli_real_escape_string($conn, $_POST['salis']);
 $pasto_kodas = mysqli_real_escape_string($conn, $_POST['pasto_kodas']);
 $gatve = mysqli_real_escape_string($conn, $_POST['gatve']);
 $namo_nr = mysqli_real_escape_string($conn, $_POST['namo_nr']);
-if (checkname($vardas) && checkPasswordStrength($_POST['pass']) && checkmail($el_pastas) && checkAddressFields($miestas, $salis, $pasto_kodas, $gatve, $namo_nr)) {
+if (checkname($vardas) && checksurname($pavarde) && checkPasswordStrength($_POST['pass']) && checkmail($el_pastas) && checkAddressFields($miestas, $salis, $pasto_kodas, $gatve, $namo_nr)) {
     $stmt = $conn->prepare("INSERT INTO naudotojai (Vardas, Pavarde, El_pastas, Slaptazodis, Ar_blokuotas, Naudotojo_lygis) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssii", $vardas, $pavarde, $el_pastas, $slaptazodis, $ar_blokuotas, $userLevel);
 

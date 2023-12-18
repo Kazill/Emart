@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'C:\xampp\composer\vendor\autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . "/Emart/vendor/autoload.php";
 function getAdministratorEmails($conn)
 {
     $emails = [];

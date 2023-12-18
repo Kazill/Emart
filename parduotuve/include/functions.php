@@ -56,7 +56,21 @@ function checkname($username)
 		return false;
 	} else return true;
 }
-
+function checksurname($username)
+{   // Vartotojo vardo sintakse
+	$_SESSION['pavarde_error'] = NULL;
+	if (!$username || strlen($username = trim($username)) == 0) {
+		$_SESSION['pavarde_error'] =
+			"<font size=\"2\" color=\"#ff0000\">* Neįvesta vartotojo pavardė</font>";
+		"";
+		return false;
+	} elseif (!preg_match("/^([0-9a-zA-Z])*$/", $username))  /* Check if username is not alphanumeric */ {
+		$_SESSION['pavarde_error'] =
+			"<font size=\"2\" color=\"#ff0000\">* Vartotojo pavardė gali būti sudaryta<br>
+				&nbsp;&nbsp;tik iš raidžių ir skaičių</font>";
+		return false;
+	} else return true;
+}
 function checkpass($pwd, $dbpwd)
 {     //  slaptazodzio tikrinimas (tik demo: min 4 raides ir/ar skaiciai) ir ar sutampa su DB esanciu
 	$_SESSION['pass_error'] = NULL;
