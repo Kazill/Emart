@@ -122,7 +122,7 @@ CREATE TABLE `komentarai` (
   `laikas` varchar(255) NOT NULL,
   `id_Komentaras` int(11) NOT NULL,
   `fk_Prekeid_Preke` int(11) NOT NULL,
-  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL
+  `fk_Pirkejasid_Pirkejas` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -500,7 +500,7 @@ ALTER TABLE `apeliacijos`
 --
 ALTER TABLE `komentarai`
   ADD CONSTRAINT `Gavo` FOREIGN KEY (`fk_Prekeid_Preke`) REFERENCES `prekes` (`id_Preke`),
-  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `pardavejai`
