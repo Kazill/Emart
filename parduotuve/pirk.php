@@ -24,30 +24,34 @@ if (!empty($_SESSION['email'])) {
     // Čia reikės gauti vartotojo ID iš sesijos arba duomenų bazės
     // Pavyzdžiui, $vartotojoId = $_SESSION['vartotojo_id'];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['prekes_id'])) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $prekesId = $_POST['prekes_id'];
     
         // Ištrinama prekė iš krepšelio naudojant prepared statements
-        $sql = "DELETE FROM uzsakymo_Prekes WHERE fk_Uzsakymasid_Uzsakymas = $prekesId";
-        $sql1 = "DELETE FROM uzsakymai WHERE id_Uzsakymas = $prekesId";
+        $sql = "UPDATE uzsakymai AS u
+        JOIN uzsakymo_prekes AS up ON u.id_Uzsakymas = up.fk_Uzsakymasid_Uzsakymas
+        SET u.busena = 'Tuoj bus atvezta'
+        ";
+        $sql1 = "DELETE FROM uzsakymo_prekes;
+        ";
         $stmt = $conn->prepare($sql);
         $stmt1 = $conn1->prepare($sql1);
-        if ($stmt &&$stmt1) {
+        if ($stmt && $stmt1) {
             $stmt->execute();
             $stmt1->execute();
     
             if ($stmt->affected_rows > 0) {
-                echo "Prekė sėkmingai pašalinta iš krepšelio";
+                echo "Prekė sėkmingai uzsisakyta";
             } else {
-                echo "Prekės pašalinti nepavyko: prekė gali būti jau ištrinta arba įvyko klaida". $conn->error ." kitas ". $conn1->error;
+                echo "Prekės uzsisakyti nepavyko :'(". $conn->error;
             }
     
             $stmt->close();
             // Redirect to avoid form re-submission on refresh
-           // header("Location: krepselis.php"); 
+           header("Location: index.php"); 
             exit;
         } else {
-            echo "Klaida: " . $conn->error;
+            echo "Klaida: " . $conn->error ."\t kita". $conn1->error;
         }
     }
     
