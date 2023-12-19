@@ -1,7 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require 'C:\xampp\composer\vendor\autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . "/Emart/vendor/autoload.php";
 ini_set("display_errors", "1");
 error_reporting(E_ALL);
 session_start();

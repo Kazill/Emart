@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
 <html>
     <head>  
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8"> 
-        <title>Užsąkymas</title>
+        <title>Užsakymas</title>
         <link href="/Emart/parduotuve/include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <script>
@@ -43,13 +43,13 @@ if (isset($_GET['id'])) {
     <body>   
         <table class="center"><tr><td><img src="/Emart/parduotuve/include/top.png"></td></tr><tr><td> 
             <table style="border-width: 2px; border-style: dotted;"><tr><td>
-                Atgal į [<a href="/Emart/parduotuve/admin/uzsakymai.php">Užsąkymus</a>]
+                Atgal į [<a href="/Emart/parduotuve/admin/uzsakymai.php">Užsakymus</a>]
             </td></tr></table><br>
             <div style="background-color: aqua; padding: 10px;">
-                <center><b>Užsąkymas</b></center>
+                <center><b>Užsakymas</b></center>
                 <p style="text-align:left;">Data: <?php echo htmlspecialchars($orderData['data']); ?></p>
                 <p style="text-align:left;">Užsąkymo kaina: <?php echo htmlspecialchars($orderData['uzsakymo_kaina']); ?></p>
-                <p style="text-align:left;">Būsena: <?php echo htmlspecialchars($orderData['būsena']); ?></p>
+                <p style="text-align:left;">Būsena: <?php echo htmlspecialchars($orderData['busena']); ?></p>
                 <p style="text-align:left;">Pristatymo būdas: <?php echo htmlspecialchars($orderData['pristatymo_budas']); ?></p>
                 <p style="text-align:left;">Pirkėjas: <?php echo htmlspecialchars($orderData['Vardas']) . " " . htmlspecialchars($orderData['Pavarde']); ?></p>
             </div>
@@ -66,6 +66,10 @@ if (isset($_GET['id'])) {
                 echo "<p>Pardavėjas: " . htmlspecialchars($row['Vardas']). " " . htmlspecialchars($row['Pavarde']) . "</p>"; // Replace 'first_name' with your column name
                 echo "<p>Kaina: " . htmlspecialchars($row['kaina']) . "</p>";
                 echo "<p>Kiekis " . htmlspecialchars($row['kiekis']) . "</p>";
+                if ($row['El_pastas']==$_SESSION['email'])
+                {
+                    echo "<button onclick=window.location.href='/Emart/parduotuve/admin/patvirtinti_transakcija.php?id=$Id'>Patvirtinti transakciją</button>";
+                }
                 echo "</div><br>";
             }
         } else {
