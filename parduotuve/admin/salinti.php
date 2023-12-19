@@ -9,6 +9,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $level = $_GET['level'];
  try{
+    
     if($level==3){
         $sql = "DELETE FROM adresai WHERE `fk_Naudotojasid_Naudotojas`='{$id}'";
         if (!$result = $conn->query($sql)) die("Operation failed: " . $conn->error);

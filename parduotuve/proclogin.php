@@ -20,7 +20,7 @@ $email = mysqli_real_escape_string($conn, trim($_POST['email']));
 $password = $_POST['pass'];
 
 // SQL query to check if the user exists with the given email
-$stmt = $conn->prepare("SELECT Vardas, Pavarde, Slaptazodis, Naudotojo_lygis FROM naudotojai WHERE El_pastas = ?");
+$stmt = $conn->prepare("SELECT * FROM naudotojai LEFT JOIN administratoriai a ON a.fk_Naudotojasid_Naudotojas = id_Naudotojas LEFT JOIN pirkejai pi ON pi.fk_Naudotojasid_Naudotojas = id_Naudotojas LEFT JOIN pardavejai pa ON pa.fk_Naudotojasid_Naudotojas = id_Naudotojas WHERE El_pastas = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -36,6 +36,17 @@ if ($result->num_rows > 0) {
         $_SESSION['email']=$email;
         $_SESSION['message'] = "Sėkmingai prisijungėte!";
         $_SESSION['uLevel']='3';
+        $_SESSION['userId']=$row['id_Naudotojas'];
+        if($_SESSION['tipas'] == '1'){
+            $_SESSION['otherId']=$row['id_Administratorius'];
+        }
+        if($_SESSION['tipas'] == '2'){
+            $_SESSION['otherId']=$row['id_Pardavejas'];
+        }
+        if($_SESSION['tipas'] == '3'){
+            $_SESSION['otherId']=$row['id_Pirkejas'];
+        }
+
         // Redirect to a logged-in page
         header("Location: /Emart/parduotuve/index.php");
         exit;

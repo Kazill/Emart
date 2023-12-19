@@ -23,6 +23,22 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS vertinimai;
+DROP TABLE IF EXISTS uzsakymo_prekes;
+
+DROP TABLE IF EXISTS komentarai;
+DROP TABLE IF EXISTS prekes;
+DROP TABLE IF EXISTS kategorijos;
+DROP TABLE IF EXISTS pranesimai;
+DROP TABLE IF EXISTS apeliacijos;
+DROP TABLE IF EXISTS pardavejai;
+DROP TABLE IF EXISTS adresai;
+DROP TABLE IF EXISTS uzsakymai;
+DROP TABLE IF EXISTS administratoriai;
+
+DROP TABLE IF EXISTS pirkejai;
+DROP TABLE IF EXISTS naudotojai;
+
 --
 -- Table structure for table `administratoriai`
 --
@@ -131,7 +147,7 @@ CREATE TABLE `komentarai` (
   `laikas` varchar(255) NOT NULL,
   `id_Komentaras` int(11) NOT NULL,
   `fk_Prekeid_Preke` int(11) NOT NULL,
-  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL,
+  `fk_Pirkejasid_Pirkejas` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -555,7 +571,7 @@ ALTER TABLE `apeliacijos`
 --
 ALTER TABLE `komentarai`
   ADD CONSTRAINT `Gavo` FOREIGN KEY (`fk_Prekeid_Preke`) REFERENCES `prekes` (`id_Preke`),
-  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `Paraso` FOREIGN KEY (`fk_Pirkejasid_Pirkejas`) REFERENCES `pirkejai` (`id_Pirkejas`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `pardavejai`
