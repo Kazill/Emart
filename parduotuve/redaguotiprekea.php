@@ -18,7 +18,7 @@ if($_POST !=null){
 	$pavadinimas = $_POST['Pavadinimas'];
 	$kaina = $_POST['Kaina'];
 	$id = $_POST['id_Preke'];
-	//$kategorija = $_POST['kategorija'];
+	$kategorija = $_POST['kategorija'];
 	//$kiekis = $_POST['kiekis'];
 	//$garantija = $_POST['garantija'];
 	//$pristatymasgeriausiuatveju = $_POST['pristatymasgeriausiuatveju'];
@@ -43,7 +43,8 @@ if($_POST !=null){
 					SET
 					`pavadinimas`='{$pavadinimas}',
 					`kaina`='{$kaina}',
-					`gamintojas`='{$gamintojas}'
+					`gamintojas`='{$gamintojas}',
+					`kategorija` = '{$kategorija}'
 					WHERE `id_Preke`='{$id}'";
 
     if (!$result = $conn->query($sql)) die("Negaliu atnaujinti: " . $conn->error);

@@ -4,6 +4,9 @@ include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/nustatymai.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 
+$categories = array("Kompiuteriai", "Kompiuterių priedai", 
+"Mobilieji įrenginiai", "Mobiliųjų įrenginių priedai", "Kita");
+
 if (isset($_GET['id'])) {
     $Id = intval($_GET['id']); // Sanitize the input
 
@@ -52,6 +55,15 @@ if (isset($_GET['id'])) {
                         <input type="text" name="Kiekis" value="Nežinomas" /></p>
                     <p style="text-align:left;">Gamintojas:<br>
                         <input type="text" name="Gamintojas" value="<?php echo htmlspecialchars($orderData['gamintojas']); ?>" /></p>
+                        <p style="text-align:left;">Kategorijos priskyrimas:<br>
+                        <select name=kategorija>
+					<option value="<?php echo htmlspecialchars($orderData['kategorija']); ?>" selected hidden><?php echo htmlspecialchars($orderData['kategorija']); ?></option>
+                    <?php
+                    foreach ($categories as $cat){
+                        echo "<option value='$cat'>$cat</option>";
+                    }
+                    ?>
+				</select><br><br>
                     <p style="text-align:center;">
                     <input type="hidden" name="id_Preke" value="<?php echo $Id; ?>" />
                         <button type="submit">Išsaugoti Pakeitimus</button>
