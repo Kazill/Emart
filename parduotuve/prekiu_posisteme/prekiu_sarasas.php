@@ -58,7 +58,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.p
              }
             ?>
                 </table>
-            <button onclick="window.location.href='../pridetipreke.php'">Įtraukti prekę</button>
+            <button onclick="window.location.href='/Emart/parduotuve/prekiu_posisteme/prideti_preke.php'">Įtraukti prekę</button>
 		   </div>
             </td></tr></table>
         </body>

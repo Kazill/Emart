@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
         <tr><td><img src="/Emart/parduotuve/include/top.png"></td></tr>
         <tr><td> 
             <table style="border-width: 2px; border-style: dotted;">
-                <tr><td>Atgal į [<a href="/Emart/parduotuve/prekiu_posisteme/perziureti_prekiu_sarasa.php">Prekių sąrašą</a>]</td></tr>
+                <tr><td>Atgal į [<a href="/Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php">Prekių sąrašą</a>]</td></tr>
             </table>
             <br>
             <div align="center" style="background-color: aqua; padding: 10px;">
@@ -45,7 +45,7 @@ if (isset($_GET['id'])) {
                     <p style="text-align:left;">Pavadinimas:<br>
                         <input type="text" name="Pavadinimas" value="<?php echo htmlspecialchars($orderData['pavadinimas']); ?>" /></p>
                     <p style="text-align:left;">Pardavėjas:<br>
-                        <input type="text" name="Pardavejas" value="<?php echo htmlspecialchars($orderData['Vardas']); ?>" /></p>
+                        <input type="text" name="Pardavejas" value="<?php echo htmlspecialchars($orderData['Vardas']); ?>" readonly /></p>
                     <p style="text-align:left;">Kaina:<br>
                         <input type="text" name="Kaina" value="<?php echo htmlspecialchars($orderData['kaina']); ?>" /></p>
                     <p style="text-align:left;">Kiekis:<br>
