@@ -1,10 +1,11 @@
 <?php
+session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require $_SERVER['DOCUMENT_ROOT'] . "/Emart/vendor/autoload.php";
 ini_set("display_errors", "1");
 error_reporting(E_ALL);
-session_start();
+
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/functions.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/Emart/parduotuve/include/db_connect.php");
 $_SESSION['prev']="zinutes";
@@ -16,7 +17,7 @@ $_SESSION['prev']="zinutes";
         </head>
         <body>   
 <?php
-	$siuntejas = $_SESSION['userId'];
+	$siuntejas = $_SESSION['otherId'];
     $gavejas = $_GET['email'];
 
     if($_POST !=null){
