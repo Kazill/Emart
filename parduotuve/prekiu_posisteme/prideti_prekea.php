@@ -8,13 +8,13 @@ $host = 'localhost';    // Hostname of your database server
 $user = 'root';    // Username for database access
 $pass = '';    // Password for database access
 $db   = 'isp';    // Name of your database
-$lentele="prekes";
+$lentele='prekes';
 
 $conn = new mysqli($host, $user, $pass, $db);
    if ($conn->connect_error) die("Negaliu prisijungti: " . $conn->connect_error);
 mysqli_set_charset($conn,"utf8");// dėl lietuviškų raidžių
 
-if($_POST !=null){
+if($_POST != null){
 	$pavadinimas = $_POST['Pavadinimas'];
 	$kaina = $_POST['Kaina'];
 	$pardavejas = $_POST['seller_email'];
@@ -44,16 +44,28 @@ if($_POST !=null){
 					WHERE `id`='{$id}'";
 	*/
 	
-	$sql = "  INSERT INTO `prekes`(`pavadinimas`, `kaina`, `kategorija`, `gamintojas`, `ar_paslepta`, `id_Preke`, `fk_Pardavėjasid_Pardavėjas`) 
-	VALUES ('$pavadinimas','$kaina','default','$gamintojas','0',NULL,'$seller_id')";
+	$stmt = $conn->prepare("INSERT INTO prekes (`pavadinimas`, `kaina`, `kategorija`, `gamintojas`, `ar_paslepta`, `id_Preke`, `fk_Pardavėjasid_Pardavėjas`) VALUES (?, ?, 'default', ?, '0', NULL, ?)");
 
-    if (!$result = $conn->query($sql)) die("Negaliu atnaujinti: " . $conn->error);
-	else {header("Location: /Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php");} 
-	}
-	else 
-	{header("Location: /Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php");}
+// Bind parameters
+$stmt->bind_param("sdsd", $pavadinimas, $kaina, $gamintojas, $seller_id);
 
+// Execute the query
+if ($stmt->execute()) {
+    header("Location: /Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php");
+} else {
+    echo "Error: " . $stmt->error;
 }
+
+// Close the statement and connection
+$stmt->close();
+$conn->close();
+	}
+	else {header("Location: /Emart/parduotuve/prekiu_posisteme/prekiu_sarasas.php");
+	$_SESSION['message'] = "Nesate patvirtintas pardavėjas. Parduoti galėsite, kai jus patvirtins administratorius.";} 
+	}
+	else {header("Location: /Emart/parduotuve/prekiu_posisteme/index.php");} 
+	
+
 
 
 ?>
