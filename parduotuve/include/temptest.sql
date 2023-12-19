@@ -131,7 +131,7 @@ CREATE TABLE `komentarai` (
   `laikas` varchar(255) NOT NULL,
   `id_Komentaras` int(11) NOT NULL,
   `fk_Prekeid_Preke` int(11) NOT NULL,
-  `fk_Pirkejasid_Pirkejas` int(11) NOT NULL,
+  `fk_Pirkejasid_Pirkejas` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
